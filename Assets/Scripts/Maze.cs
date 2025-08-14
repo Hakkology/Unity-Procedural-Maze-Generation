@@ -2,6 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class MapLocation
+{
+    public int x;
+    public int z;
+
+    public MapLocation(int _x, int _z)
+    {
+        x = _x;
+        z = _z;
+    }
+}
+
 public class Maze : MonoBehaviour
 {
     public int width = 30; //x length
@@ -9,9 +21,14 @@ public class Maze : MonoBehaviour
     public byte[,] map;
     public int scale = 6;
 
-    // Start is called before the first frame update
+    public List<MapLocation> wallLocations;
+    public List<MapLocation> corridorLocations;
+
     void Start()
     {
+        wallLocations = new List<MapLocation>();
+        corridorLocations = new List<MapLocation>();
+
         InitialiseMap();
         Generate();
         DrawMap();
@@ -19,11 +36,12 @@ public class Maze : MonoBehaviour
 
     void InitialiseMap()
     {
-        map = new byte[width,depth];
+        map = new byte[width, depth];
         for (int z = 0; z < depth; z++)
             for (int x = 0; x < width; x++)
             {
-                    map[x, z] = 1;     //1 = wall  0 = corridor
+                map[x, z] = 1; // Initially set all as walls
+                wallLocations.Add(new MapLocation(x, z)); // Add all as wall locations
             }
     }
 
@@ -32,29 +50,23 @@ public class Maze : MonoBehaviour
         for (int z = 0; z < depth; z++)
             for (int x = 0; x < width; x++)
             {
-               if(Random.Range(0,100) < 50)
-                 map[x, z] = 0;     //1 = wall  0 = corridor
+                if (Random.Range(0, 100) < 50)
+                {
+                    map[x, z] = 0; // Convert some walls to corridors
+                    corridorLocations.Add(new MapLocation(x, z)); // Add to corridor list
+                    wallLocations.RemoveAll(loc => loc.x == x && loc.z == z); // Remove from wall list
+                }
             }
     }
 
     void DrawMap()
     {
-        for (int z = 0; z < depth; z++)
-            for (int x = 0; x < width; x++)
-            {
-                if (map[x, z] == 1)
-                {
-                    Vector3 pos = new Vector3(x * scale, 0, z * scale);
-                    GameObject wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    wall.transform.localScale = new Vector3(scale, scale, scale);
-                    wall.transform.position = pos;
-                }
-            }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        foreach (var wallLocation in wallLocations)
+        {
+            Vector3 pos = new Vector3(wallLocation.x * scale, 0, wallLocation.z * scale);
+            GameObject wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            wall.transform.localScale = new Vector3(scale, scale, scale);
+            wall.transform.position = pos;
+        }
     }
 }
