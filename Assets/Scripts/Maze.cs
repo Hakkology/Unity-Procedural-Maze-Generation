@@ -41,7 +41,7 @@ public class Maze : MonoBehaviour
             for (int x = 0; x < width; x++)
             {
                 map[x, z] = 1; // Initially set all as walls
-                wallLocations.Add(new MapLocation(x, z)); // Add all as wall locations
+                // wallLocations.Add(new MapLocation(x, z)); // Add all as wall locations
             }
     }
 
@@ -53,20 +53,53 @@ public class Maze : MonoBehaviour
                 if (Random.Range(0, 100) < 50)
                 {
                     map[x, z] = 0; // Convert some walls to corridors
-                    corridorLocations.Add(new MapLocation(x, z)); // Add to corridor list
-                    wallLocations.RemoveAll(loc => loc.x == x && loc.z == z); // Remove from wall list
+                    // corridorLocations.Add(new MapLocation(x, z)); // Add to corridor list
+                    // wallLocations.RemoveAll(loc => loc.x == x && loc.z == z); // Remove from wall list
                 }
             }
     }
 
     void DrawMap()
     {
-        foreach (var wallLocation in wallLocations)
-        {
-            Vector3 pos = new Vector3(wallLocation.x * scale, 0, wallLocation.z * scale);
-            GameObject wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            wall.transform.localScale = new Vector3(scale, scale, scale);
-            wall.transform.position = pos;
-        }
+        for (int z = 0; z < depth; z++)
+            for (int x = 0; x < width; x++)
+            {
+                if (map[x, z] == 1)
+                {
+                    Vector3 pos = new Vector3(x * scale, 0, z * scale);
+                    GameObject wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    wall.transform.localScale = new Vector3(scale, scale, scale);
+                    wall.transform.position = pos;
+                }
+            }
+    }
+
+    public int CountSquareNeighbours(int x, int z)
+    {
+        int count = 0;
+        if (x <= 1 || x >= width - 2 || z <= 1 || z >= depth - 2) return 5;
+        if (map[x - 1, z] == 0) count++;
+        if (map[x + 1, z] == 0) count++;
+        if (map[x, z - 1] == 0) count++;
+        if (map[x, z + 1] == 0) count++;
+
+        return count;
+    }
+
+    public int CountDiagonalNeighbours(int x, int z)
+    {
+        int count = 0;
+        if (x <= 1 || x >= width - 2 || z <= 1 || z >= depth - 2) return 5;
+        if (map[x - 1, z - 1] == 0) count++;
+        if (map[x + 1, z - 1] == 0) count++;
+        if (map[x - 1, z + 1] == 0) count++;
+        if (map[x + 1, z + 1] == 0) count++;
+
+        return count;
+    }
+
+    public int CountAllNeighbours(int x, int z)
+    {
+        return CountSquareNeighbours(x, z) + CountSquareNeighbours(x, z);
     }
 }

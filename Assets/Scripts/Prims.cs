@@ -1,13 +1,16 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Prims : Maze 
+public class Prims : Maze
 {
+
     public override void Generate()
     {
         int x = 2;
         int z = 2;
 
         map[x, z] = 0;
+        wallLocations = new List<MapLocation>();
 
         wallLocations.Add(new MapLocation(x + 1, z));
         wallLocations.Add(new MapLocation(x - 1, z));
@@ -19,12 +22,23 @@ public class Prims : Maze
         {
             int rwall = Random.Range(0, wallLocations.Count);
 
-            x = wallLocations[rwall.x];
-            z = wallLocations[rwall.z];
+            x = wallLocations[rwall].x;
+            z = wallLocations[rwall].z;
+            wallLocations.RemoveAt(rwall);
+            // corridorLocations.Add(new MapLocation(x, z));
+            if (CountSquareNeighbours(x, z) == 1)
+            {
+                map[x, z] = 0;
+                wallLocations.Add(new MapLocation(x + 1, z));
+                wallLocations.Add(new MapLocation(x - 1, z));
+                wallLocations.Add(new MapLocation(x, z + 1));
+                wallLocations.Add(new MapLocation(x, z - 1));
+            }
 
-            
             countloops++;
         }
     }
+    
+    
 
 }
