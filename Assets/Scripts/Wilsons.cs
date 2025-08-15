@@ -11,7 +11,7 @@ public class Wilsons : Maze
         new MapLocation(0, 1),
         new MapLocation(0, -1),
     };
-
+    
     public override void Generate()
     {
         int x = Random.Range(2, width - 1);
@@ -41,8 +41,8 @@ public class Wilsons : Maze
     {
         List<MapLocation> inWalk = new List<MapLocation>();
 
-        int currentx = Random.Range(4, width - 5);
-        int currentz = Random.Range(4, depth - 5);
+        int currentx = Random.Range(2, width - 1);
+        int currentz = Random.Range(2, depth - 1);
 
         inWalk.Add(new MapLocation(currentx, currentz));
 
@@ -60,8 +60,8 @@ public class Wilsons : Maze
 
             if (CountSquareNeighbours(neighboursx, neighboursz) < 2)
             {
-                currentx += directions[randomDirection].x;
-                currentz += directions[randomDirection].z;
+                currentx = neighboursx;
+                currentz = neighboursz;
                 inWalk.Add(new MapLocation(currentx, currentz));
             }
             validPath = CountSquareMazeNeighbours(currentx, currentz) == 1;
