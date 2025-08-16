@@ -11,6 +11,8 @@ public class Wilsons : Maze
         new MapLocation(0, 1),
         new MapLocation(0, -1),
     };
+
+    List<MapLocation> notUsed = new List<MapLocation>();
     
     public override void Generate()
     {
@@ -18,7 +20,10 @@ public class Wilsons : Maze
         int z = Random.Range(2, depth - 1);
         map[x, z] = 2;
 
-        RandomWalk();
+        while(GetAvailableCells() > 1)
+        {
+            RandomWalk();
+        }
     }
 
     private int CountSquareMazeNeighbours(int x, int z)
@@ -37,12 +42,29 @@ public class Wilsons : Maze
         return count;
     }
 
+    private int GetAvailableCells()
+    {
+      notUsed.Clear();
+      for (int z = 1; z < depth - 1; z++)
+      {
+         for (int x = 1; x < width -1; x++)
+         {
+           if (CountSquareMazeNeighbours(x, z) == 0)
+           {
+               notUsed.Add(new MapLocation(x, z));
+           }
+         } 
+      }
+      return notUsed.Count;
+    }
+
     private void RandomWalk()
     {
         List<MapLocation> inWalk = new List<MapLocation>();
 
-        int currentx = Random.Range(2, width - 1);
-        int currentz = Random.Range(2, depth - 1);
+        int rStartIndex = Random.Range(0, notUsed.Count);
+        int currentx = notUsed[rStartIndex].x;
+        int currentz = notUsed[rStartIndex].z;
 
         inWalk.Add(new MapLocation(currentx, currentz));
 
