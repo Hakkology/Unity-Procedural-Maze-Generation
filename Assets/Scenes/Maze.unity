@@ -132,6 +132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 160156219}
   - component: {fileID: 160156220}
+  - component: {fileID: 160156221}
   m_Layer: 0
   m_Name: MazeGen
   m_TagString: Untagged
@@ -161,9 +162,24 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 160156217}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f97dfe0ab5dc4af48a545c7440ed102a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  width: 30
+  depth: 30
+  scale: 6
+--- !u!114 &160156221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160156217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f550f3c4f2c7868478a20b243f6d19e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   width: 30
