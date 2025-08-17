@@ -20,9 +20,12 @@ public class Wilsons : Maze
         int z = Random.Range(2, depth - 1);
         map[x, z] = 2;
 
-        while(GetAvailableCells() > 1)
+        int runWalkAttempts = width * depth / 3;
+
+        while(GetAvailableCells() > 1 && runWalkAttempts > 0)
         {
             RandomWalk();
+            runWalkAttempts--;
         }
     }
 
@@ -70,11 +73,13 @@ public class Wilsons : Maze
 
         int loopCount = 0;
         bool validPath = false;
-        while (currentx > 0 && currentx < width - 1 && currentz > 0 && currentz < depth - 1 && loopCount < 5000 && !validPath)
+        while (currentx > 0 && currentx < width - 1 && currentz > 0 && currentz < depth - 1 && loopCount < (width * depth) && !validPath)
         {
             loopCount++; // loop check
 
             map[currentx, currentz] = 0;
+            if (CountSquareMazeNeighbours(currentx, currentz) > 1)
+                break;
 
             int randomDirection = Random.Range(0, directions.Count);
             int neighboursx = currentx + directions[randomDirection].x;
