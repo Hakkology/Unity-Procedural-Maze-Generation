@@ -249,6 +249,6 @@ public class Maze : MonoBehaviour
 
     public int CountAllNeighbours(int x, int z)
     {
-        return CountSquareNeighbours(x, z) + CountSquareNeighbours(x, z);
+        return CountSquareNeighbours(x, z) + CountDiagonalNeighbours(x, z);
     }
 }
