@@ -89,6 +89,8 @@ public class Maze : MonoBehaviour
         for (int z = 0; z < depth; z++)
             for (int x = 0; x < width; x++)
             {
+                Vector3 pos = new Vector3(x * scale, 0, z * scale); // Save pos
+
                 if (map[x, z] == 1)
                 {
                     // Older primitive cube code.
@@ -97,95 +99,81 @@ public class Maze : MonoBehaviour
                     // wall.transform.localScale = new Vector3(scale, scale, scale);
                     // wall.transform.position = pos;
                 }
-                else if(Search2D(x, z, new int[] {5,0,5,1,0,1,5,0,5})) 
+                else if (Search2D(x, z, new int[] { 5, 0, 5, 1, 0, 1, 5, 0, 5 })) // vertical straight
                 {
                     // Procedural mace piece add code.
-                    Vector3 pos = new Vector3(x * scale, 0, z * scale);
-                    GameObject wall = Instantiate(straight, pos, Quaternion.identity);
-                }
-                else if(Search2D(x, z, new int[] {5,1,5,0,0,0,5,1,5})) 
-                {
-                    // Procedural mace piece add code.
-                    Vector3 pos = new Vector3(x * scale, 0, z * scale);
+
                     GameObject wall = Instantiate(straight, pos, Quaternion.Euler(0, 90, 0));
                 }
-                else if(Search2D(x, z, new int[] {1,0,1,0,0,0,1,0,1})) 
+                else if (Search2D(x, z, new int[] { 5, 1, 5, 0, 0, 0, 5, 1, 5 })) // horizontal straight
                 {
                     // Procedural mace piece add code.
-                    Vector3 pos = new Vector3(x * scale, 0, z * scale);
-                    GameObject wall = Instantiate(crossroad, pos, Quaternion.identity); 
+                    GameObject wall = Instantiate(straight, pos, Quaternion.identity);
                 }
-                else if(Search2D(x, z, new int[] {5,1,5,0,0,1,5,1,5})) 
+                else if (Search2D(x, z, new int[] { 1, 0, 1, 0, 0, 0, 1, 0, 1 })) // Tjunction
                 {
                     // Procedural mace piece add code.
-                    Vector3 pos = new Vector3(x * scale, 0, z * scale);
-                    GameObject wall = Instantiate(deadend, pos, Quaternion.Euler(0, 90, 0));
+                    GameObject wall = Instantiate(crossroad, pos, Quaternion.identity);
                 }
-                else if(Search2D(x, z, new int[] {5,1,5,1,0,0,5,1,5})) 
+                else if (Search2D(x, z, new int[] { 5, 1, 5, 0, 0, 1, 5, 1, 5 })) // horizontal right end
                 {
                     // Procedural mace piece add code.
-                    Vector3 pos = new Vector3(x * scale, 0, z * scale);
-                    GameObject wall = Instantiate(deadend, pos, Quaternion.Euler(0, 270, 0)); 
+                    GameObject wall = Instantiate(deadend, pos, Quaternion.Euler(0, 180, 0));
                 }
-                else if(Search2D(x, z, new int[] {5,1,5,1,0,1,5,0,5})) 
+                else if (Search2D(x, z, new int[] { 5, 1, 5, 1, 0, 0, 5, 1, 5 })) // horizontal left end
                 {
                     // Procedural mace piece add code.
-                    Vector3 pos = new Vector3(x * scale, 0, z * scale);
                     GameObject wall = Instantiate(deadend, pos, Quaternion.identity); 
                 }
-                else if(Search2D(x, z, new int[] {5,0,5,1,0,1,5,1,5})) 
+                else if (Search2D(x, z, new int[] { 5, 1, 5, 1, 0, 1, 5, 0, 5 })) // vertical up end
                 {
                     // Procedural mace piece add code.
-                    Vector3 pos = new Vector3(x * scale, 0, z * scale);
-                    GameObject wall = Instantiate(deadend, pos, Quaternion.Euler(0, 180, 0)); 
+                    GameObject wall = Instantiate(deadend, pos, Quaternion.Euler(0, 90, 0));
                 }
-                else if(Search2D(x, z, new int[] {5,1,5,0,0,1,1,0,5})) 
+                else if (Search2D(x, z, new int[] { 5, 0, 5, 1, 0, 1, 5, 1, 5 })) // vertical down end
                 {
                     // Procedural mace piece add code.
-                    Vector3 pos = new Vector3(x * scale, 0, z * scale);
+                    GameObject wall = Instantiate(deadend, pos, Quaternion.Euler(0, -90, 0));
+                }
+                else if (Search2D(x, z, new int[] { 5, 1, 5, 0, 0, 1, 1, 0, 5 }))
+                {
+                    // Procedural mace piece add code.
                     GameObject wall = Instantiate(cornerstraight, pos, Quaternion.Euler(0, 180, 0));
                 }
-                else if(Search2D(x, z, new int[] {5,1,5,1,0,0,5,0,1})) 
+                else if (Search2D(x, z, new int[] { 5, 1, 5, 1, 0, 0, 5, 0, 1 }))
                 {
                     // Procedural mace piece add code.
-                    Vector3 pos = new Vector3(x * scale, 0, z * scale);
-                    GameObject wall = Instantiate(cornerstraight, pos, Quaternion.Euler(0, 90, 0)); 
+                    GameObject wall = Instantiate(cornerstraight, pos, Quaternion.Euler(0, 90, 0));
                 }
-                else if(Search2D(x, z, new int[] {5,0,1,1,0,0,5,1,5})) 
+                else if (Search2D(x, z, new int[] { 5, 0, 1, 1, 0, 0, 5, 1, 5 }))
                 {
                     // Procedural mace piece add code.
-                    Vector3 pos = new Vector3(x * scale, 0, z * scale);
-                    GameObject wall = Instantiate(cornerstraight, pos, Quaternion.Euler(0, 0, 0)); 
+                    GameObject wall = Instantiate(cornerstraight, pos, Quaternion.Euler(0, 0, 0));
                 }
-                else if(Search2D(x, z, new int[] {1,0,5,5,0,1,5,1,5})) 
+                else if (Search2D(x, z, new int[] { 1, 0, 5, 5, 0, 1, 5, 1, 5 }))
                 {
                     // Procedural mace piece add code.
-                    Vector3 pos = new Vector3(x * scale, 0, z * scale);
-                    GameObject wall = Instantiate(cornerstraight, pos, Quaternion.Euler(0, -90, 0)); 
+                    GameObject wall = Instantiate(cornerstraight, pos, Quaternion.Euler(0, -90, 0));
                 }
-                else if(Search2D(x, z, new int[] {1,0,1,0,0,0,5,1,5})) 
+                else if (Search2D(x, z, new int[] { 1, 0, 1, 0, 0, 0, 5, 1, 5 }))
                 {
                     // Procedural mace piece add code.
-                    Vector3 pos = new Vector3(x * scale, 0, z * scale);
-                    GameObject wall = Instantiate(tjunction, pos, Quaternion.Euler(0, -90, 0)); 
+                    GameObject wall = Instantiate(tjunction, pos, Quaternion.Euler(0, -90, 0));
                 }
-                else if(Search2D(x, z, new int[] {5,1,5,0,0,0,1,0,1})) 
+                else if (Search2D(x, z, new int[] { 5, 1, 5, 0, 0, 0, 1, 0, 1 }))
                 {
                     // Procedural mace piece add code.
-                    Vector3 pos = new Vector3(x * scale, 0, z * scale);
-                    GameObject wall = Instantiate(tjunction, pos, Quaternion.Euler(0, 90, 0)); 
+                    GameObject wall = Instantiate(tjunction, pos, Quaternion.Euler(0, 90, 0));
                 }
-                else if(Search2D(x, z, new int[] {1,0,5,0,0,1,1,0,5})) 
+                else if (Search2D(x, z, new int[] { 1, 0, 5, 0, 0, 1, 1, 0, 5 }))
                 {
                     // Procedural mace piece add code.
-                    Vector3 pos = new Vector3(x * scale, 0, z * scale);
-                    GameObject wall = Instantiate(tjunction, pos, Quaternion.Euler(0, 180, 0)); 
+                    GameObject wall = Instantiate(tjunction, pos, Quaternion.Euler(0, 180, 0));
                 }
-                else if(Search2D(x, z, new int[] {5,0,1,1,0,0,5,0,1})) 
+                else if (Search2D(x, z, new int[] { 5, 0, 1, 1, 0, 0, 5, 0, 1 }))
                 {
                     // Procedural mace piece add code.
-                    Vector3 pos = new Vector3(x * scale, 0, z * scale);
-                    GameObject wall = Instantiate(tjunction, pos, Quaternion.Euler(0, 0, 0)); 
+                    GameObject wall = Instantiate(tjunction, pos, Quaternion.Euler(0, 0, 0));
                 }
             }
     }

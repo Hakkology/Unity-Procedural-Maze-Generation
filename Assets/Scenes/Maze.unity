@@ -167,12 +167,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 1281112718}
-  straight: {fileID: 7693623148365037231, guid: ebbaa798307d9fa1d865d08e991b0ddb, type: 3}
-  crossroad: {fileID: 5959022494055480223, guid: f8ee4d1f8b207ece69aa1d573e4fff21, type: 3}
-  deadend: {fileID: 5370299261866360975, guid: 64f670676d38e5e8fb44ef293c493595, type: 3}
-  cornerstraight: {fileID: 4786580586450506069, guid: 5578ecc13e465b8148d485512b7343e1, type: 3}
+  straight: {fileID: 188864042399952306, guid: c43bf3d44fe34b1448bef5c2f3d3703c, type: 3}
+  crossroad: {fileID: 2316761101637411906, guid: 33b941dea7618264d817f47c1f88335c, type: 3}
+  deadend: {fileID: 8783946307025631057, guid: 521cf734034f86b41b3f1e7505d01a16, type: 3}
+  cornerstraight: {fileID: 4778322238933730740, guid: c00081e1abb13ef489e33bb3de001c32, type: 3}
   cornercurved: {fileID: 7628872003007956122, guid: 47c5d6e22f77bb4c1a11863b2b9acb4c, type: 3}
-  tjunction: {fileID: 7291079423587053880, guid: c6829fb448ad411ecb9f7db923536f81, type: 3}
+  tjunction: {fileID: 3439985158446319273, guid: c958564cf6baedb44848499ce9e96636, type: 3}
   width: 30
   depth: 30
   scale: 6
