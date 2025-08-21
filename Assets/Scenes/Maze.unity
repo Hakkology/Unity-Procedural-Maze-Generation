@@ -173,8 +173,8 @@ MonoBehaviour:
   cornerstraight: {fileID: 4778322238933730740, guid: c00081e1abb13ef489e33bb3de001c32, type: 3}
   cornercurved: {fileID: 7628872003007956122, guid: 47c5d6e22f77bb4c1a11863b2b9acb4c, type: 3}
   tjunction: {fileID: 3439985158446319273, guid: c958564cf6baedb44848499ce9e96636, type: 3}
-  width: 50
-  depth: 50
+  width: 30
+  depth: 30
   scale: 6
 --- !u!1 &705507993
 GameObject:

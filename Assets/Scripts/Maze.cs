@@ -42,7 +42,7 @@ public class Maze : MonoBehaviour
 
         InitialiseMap();
         GenerateMap();
-        GenerateRooms(5, 5, 10);
+        GenerateRooms(4, 3, 7);
         DrawMap();
         PlaceFPC();
     }
@@ -94,9 +94,9 @@ public class Maze : MonoBehaviour
             int roomWidth = Random.Range(minSize, maxSize);
             int roomDepth = Random.Range(minSize, maxSize);
             
-            for (int x = startX; x < width-3 && x < startX + roomWidth; x++)
+            for (int x = startX; x < width - 3 && x < startX + roomWidth; x++)
             {
-                for (int z = startZ; startZ < depth - 3 && z < startZ + roomDepth; z++)
+                for (int z = startZ; z < depth - 3 && z < startZ + roomDepth; z++)
                 {
                     map[x, z] = 0;
                 }
