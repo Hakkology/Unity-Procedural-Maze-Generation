@@ -13,7 +13,7 @@ public class Recursive : Maze
         new MapLocation(0, -1),
     };
 
-    public override void Generate()
+    public override void GenerateMap()
     {
         Generate(Random.Range(1, width), Random.Range(1, depth)); 
     }

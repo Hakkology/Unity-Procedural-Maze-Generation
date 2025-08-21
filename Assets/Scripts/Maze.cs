@@ -41,7 +41,8 @@ public class Maze : MonoBehaviour
         corridorLocations = new List<MapLocation>();
 
         InitialiseMap();
-        Generate();
+        GenerateMap();
+        GenerateRooms(5, 5, 10);
         DrawMap();
         PlaceFPC();
     }
@@ -70,7 +71,7 @@ public class Maze : MonoBehaviour
             }
     }
 
-    public virtual void Generate()
+    public virtual void GenerateMap()
     {
         for (int z = 0; z < depth; z++)
             for (int x = 0; x < width; x++)
@@ -82,6 +83,25 @@ public class Maze : MonoBehaviour
                     // wallLocations.RemoveAll(loc => loc.x == x && loc.z == z); // Remove from wall list
                 }
             }
+    }
+
+    public virtual void GenerateRooms(int count, int minSize, int maxSize)
+    {
+        for (int c = 0; c < count; c++)
+        {
+            int startX = Random.Range(3, width - 3);
+            int startZ = Random.Range(3, depth - 3);
+            int roomWidth = Random.Range(minSize, maxSize);
+            int roomDepth = Random.Range(minSize, maxSize);
+            
+            for (int x = startX; x < width-3 && x < startX + roomWidth; x++)
+            {
+                for (int z = startZ; startZ < depth - 3 && z < startZ + roomDepth; z++)
+                {
+                    map[x, z] = 0;
+                }
+            }
+        }
     }
 
     void DrawMap()
@@ -123,7 +143,7 @@ public class Maze : MonoBehaviour
                 else if (Search2D(x, z, new int[] { 5, 1, 5, 1, 0, 0, 5, 1, 5 })) // horizontal left end
                 {
                     // Procedural mace piece add code.
-                    GameObject wall = Instantiate(deadend, pos, Quaternion.identity); 
+                    GameObject wall = Instantiate(deadend, pos, Quaternion.identity);
                 }
                 else if (Search2D(x, z, new int[] { 5, 1, 5, 1, 0, 1, 5, 0, 5 })) // vertical up end
                 {
@@ -167,13 +187,19 @@ public class Maze : MonoBehaviour
                 }
                 else if (Search2D(x, z, new int[] { 1, 0, 5, 0, 0, 1, 1, 0, 5 }))
                 {
-                    // Procedural mace piece add code.
+                    // Procedural mace piece add code.15
                     GameObject wall = Instantiate(tjunction, pos, Quaternion.Euler(0, 180, 0));
                 }
                 else if (Search2D(x, z, new int[] { 5, 0, 1, 1, 0, 0, 5, 0, 1 }))
                 {
                     // Procedural mace piece add code.
                     GameObject wall = Instantiate(tjunction, pos, Quaternion.Euler(0, 0, 0));
+                }
+                else
+                {
+                    GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    sphere.transform.localScale = new Vector3(scale, scale, scale);
+                    sphere.transform.position = pos;
                 }
             }
     }

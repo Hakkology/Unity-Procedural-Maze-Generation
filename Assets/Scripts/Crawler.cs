@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Crawler : Maze
 {
-    public override void Generate()
+    public override void GenerateMap()
     {
         for (int i = 0; i < 4; i++)
             CrawlV();

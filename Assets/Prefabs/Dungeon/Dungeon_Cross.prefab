@@ -48,9 +48,73 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: df49b2187eab0404f98a1fbe494dbe44, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4873446893628210142, guid: df49b2187eab0404f98a1fbe494dbe44, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -3097340288434626328, guid: df49b2187eab0404f98a1fbe494dbe44, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -2936431032205602233, guid: df49b2187eab0404f98a1fbe494dbe44, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -2258909429528773002, guid: df49b2187eab0404f98a1fbe494dbe44, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -383518810844267698, guid: df49b2187eab0404f98a1fbe494dbe44, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 137163846023927305, guid: df49b2187eab0404f98a1fbe494dbe44, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: df49b2187eab0404f98a1fbe494dbe44, type: 3}
       propertyPath: m_Name
-      value: Cross
+      value: Dungeon_Cross
+      objectReference: {fileID: 0}
+    - target: {fileID: 1060481912991654923, guid: df49b2187eab0404f98a1fbe494dbe44, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2726731778658718792, guid: df49b2187eab0404f98a1fbe494dbe44, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2816831734691548057, guid: df49b2187eab0404f98a1fbe494dbe44, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2821655904238734759, guid: df49b2187eab0404f98a1fbe494dbe44, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4321514657177891973, guid: df49b2187eab0404f98a1fbe494dbe44, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6294062970213516557, guid: df49b2187eab0404f98a1fbe494dbe44, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7137442478868344379, guid: df49b2187eab0404f98a1fbe494dbe44, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7653977287501116505, guid: df49b2187eab0404f98a1fbe494dbe44, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8628502785719625371, guid: df49b2187eab0404f98a1fbe494dbe44, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

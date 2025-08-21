@@ -14,7 +14,7 @@ public class Wilsons : Maze
 
     List<MapLocation> notUsed = new List<MapLocation>();
     
-    public override void Generate()
+    public override void GenerateMap()
     {
         int x = Random.Range(2, width - 1);
         int z = Random.Range(2, depth - 1);

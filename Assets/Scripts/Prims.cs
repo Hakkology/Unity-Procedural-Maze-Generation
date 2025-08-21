@@ -4,7 +4,7 @@ using UnityEngine;
 public class Prims : Maze
 {
 
-    public override void Generate()
+    public override void GenerateMap()
     {
         int x = 2;
         int z = 2;

@@ -8,6 +8,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -9113398544517907809, guid: 3719ebf77ee7d46acb31efdb7dd78a19, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -9034155721625653895, guid: 3719ebf77ee7d46acb31efdb7dd78a19, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3719ebf77ee7d46acb31efdb7dd78a19, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
@@ -48,9 +56,85 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8363749861560026337, guid: 3719ebf77ee7d46acb31efdb7dd78a19, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8171117524307203289, guid: 3719ebf77ee7d46acb31efdb7dd78a19, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 3719ebf77ee7d46acb31efdb7dd78a19, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -7414337214243103609, guid: 3719ebf77ee7d46acb31efdb7dd78a19, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -7166973272864701925, guid: 3719ebf77ee7d46acb31efdb7dd78a19, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -6775338753947271977, guid: 3719ebf77ee7d46acb31efdb7dd78a19, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -6194784029616181176, guid: 3719ebf77ee7d46acb31efdb7dd78a19, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -5117166909814561321, guid: 3719ebf77ee7d46acb31efdb7dd78a19, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4934289044750009195, guid: 3719ebf77ee7d46acb31efdb7dd78a19, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4680132301425595955, guid: 3719ebf77ee7d46acb31efdb7dd78a19, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -3238583738338763811, guid: 3719ebf77ee7d46acb31efdb7dd78a19, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -3171223004228123373, guid: 3719ebf77ee7d46acb31efdb7dd78a19, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -2473424575180118478, guid: 3719ebf77ee7d46acb31efdb7dd78a19, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 3719ebf77ee7d46acb31efdb7dd78a19, type: 3}
       propertyPath: m_Name
-      value: T_Junct
+      value: Dungeon_TJunction
+      objectReference: {fileID: 0}
+    - target: {fileID: 2653415441184803963, guid: 3719ebf77ee7d46acb31efdb7dd78a19, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4127316761828931847, guid: 3719ebf77ee7d46acb31efdb7dd78a19, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5308126664556429445, guid: 3719ebf77ee7d46acb31efdb7dd78a19, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5610089356070187967, guid: 3719ebf77ee7d46acb31efdb7dd78a19, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6633947738691741599, guid: 3719ebf77ee7d46acb31efdb7dd78a19, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7725258897302460643, guid: 3719ebf77ee7d46acb31efdb7dd78a19, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
