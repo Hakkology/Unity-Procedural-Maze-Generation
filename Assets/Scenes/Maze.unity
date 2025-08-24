@@ -173,6 +173,9 @@ MonoBehaviour:
   cornerstraight: {fileID: 4778322238933730740, guid: c00081e1abb13ef489e33bb3de001c32, type: 3}
   cornercurved: {fileID: 7628872003007956122, guid: 47c5d6e22f77bb4c1a11863b2b9acb4c, type: 3}
   tjunction: {fileID: 3439985158446319273, guid: c958564cf6baedb44848499ce9e96636, type: 3}
+  floorpiece: {fileID: 1291545146689698979, guid: 7093888947081af4fa375d6ea391fc23, type: 3}
+  wallpiece: {fileID: 1547750284607659881, guid: b56fe2614e62ab84795af8aeb676c38d, type: 3}
+  ceilingpiece: {fileID: 3795009431958536719, guid: 05b16c18d65264446a99c3b9faa08d0d, type: 3}
   width: 30
   depth: 30
   scale: 6

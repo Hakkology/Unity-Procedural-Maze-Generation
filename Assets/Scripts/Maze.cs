@@ -25,6 +25,9 @@ public class Maze : MonoBehaviour
     public GameObject cornerstraight; 
     public GameObject cornercurved; 
     public GameObject tjunction; 
+    public GameObject floorpiece;
+    public GameObject wallpiece;
+    public GameObject ceilingpiece;
 
     [Header("Maze measurement Details")]
     public int width = 30; //x length
@@ -34,6 +37,11 @@ public class Maze : MonoBehaviour
     public List<MapLocation> wallLocations;
     public List<MapLocation> corridorLocations;
     public byte[,] map;
+
+    bool top;
+    bool bottom;
+    bool right;
+    bool left;
 
     void Start()
     {
@@ -113,11 +121,10 @@ public class Maze : MonoBehaviour
 
                 if (map[x, z] == 1)
                 {
-                    // Older primitive cube code.
-                    // Vector3 pos = new Vector3(x * scale, 0, z * scale);
-                    // GameObject wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    // wall.transform.localScale = new Vector3(scale, scale, scale);
-                    // wall.transform.position = pos;
+
+                    GameObject wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    wall.transform.localScale = new Vector3(scale, scale, scale);
+                    wall.transform.position = pos;
                 }
                 else if (Search2D(x, z, new int[] { 5, 0, 5, 1, 0, 1, 5, 0, 5 })) // vertical straight
                 {
@@ -195,6 +202,13 @@ public class Maze : MonoBehaviour
                     // Procedural mace piece add code.
                     GameObject wall = Instantiate(tjunction, pos, Quaternion.Euler(0, 0, 0));
                 }
+                else if(map[x,z] == 0 && 
+                        (CountDiagonalNeighbours(x,z) >= 1 && CountSquareNeighbours(x,z)>1 
+                         || CountSquareNeighbours(x,z) >=1 && CountDiagonalNeighbours(x,z)>1))
+                {
+                    GameObject floor = Instantiate(floorpiece, pos, Quaternion.identity);
+                    GameObject ceiling = Instantiate(ceilingpiece, pos, Quaternion.identity);
+                }
                 else
                 {
                     GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -202,6 +216,19 @@ public class Maze : MonoBehaviour
                     sphere.transform.position = pos;
                 }
             }
+    }
+
+    public void LocateWalls(int x, int z)
+    {
+        top = false;
+        bottom = false;
+        left = false;
+        right = false;
+
+        if (x <= 0 || x >= width-1 || z <= 0 || z >= depth-1) return;
+        if(map[x, z+1] == 1) top = true;
+        if(map[x, z-1] == 1) bottom = true;
+
     }
 
     bool Search2D(int c, int r, int[] pattern)
