@@ -28,6 +28,8 @@ public class Maze : MonoBehaviour
     public GameObject floorpiece;
     public GameObject wallpiece;
     public GameObject ceilingpiece;
+    public GameObject pillarpiece;
+    public GameObject doorwaypiece;
 
     [Header("Maze measurement Details")]
     public int width = 30; //x length
@@ -122,9 +124,9 @@ public class Maze : MonoBehaviour
                 if (map[x, z] == 1)
                 {
 
-                    GameObject wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    wall.transform.localScale = new Vector3(scale, scale, scale);
-                    wall.transform.position = pos;
+                    // GameObject wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    // wall.transform.localScale = new Vector3(scale, scale, scale);
+                    // wall.transform.position = pos;
                 }
                 else if (Search2D(x, z, new int[] { 5, 0, 5, 1, 0, 1, 5, 0, 5 })) // vertical straight
                 {
@@ -202,12 +204,81 @@ public class Maze : MonoBehaviour
                     // Procedural mace piece add code.
                     GameObject wall = Instantiate(tjunction, pos, Quaternion.Euler(0, 0, 0));
                 }
-                else if(map[x,z] == 0 && 
-                        (CountDiagonalNeighbours(x,z) >= 1 && CountSquareNeighbours(x,z)>1 
-                         || CountSquareNeighbours(x,z) >=1 && CountDiagonalNeighbours(x,z)>1))
+                else if (map[x, z] == 0 &&
+                        (CountDiagonalNeighbours(x, z) >= 1 && CountSquareNeighbours(x, z) > 1
+                         || CountSquareNeighbours(x, z) >= 1 && CountDiagonalNeighbours(x, z) > 1))
                 {
                     GameObject floor = Instantiate(floorpiece, pos, Quaternion.identity);
                     GameObject ceiling = Instantiate(ceilingpiece, pos, Quaternion.identity);
+
+                    GameObject pillarCorner;
+                    LocateWalls(x, z);
+                    if (top)
+                    {
+                        GameObject walltop = Instantiate(wallpiece, pos, Quaternion.Euler(0, 0, 0));
+
+                        if (map[x + 1, z] == 0 && map[x + 1, z + 1] == 0)
+                        {
+                            pillarCorner = Instantiate(pillarpiece, pos, Quaternion.identity);
+                        }
+                        
+                        if (map[x - 1, z] == 0 && map[x - 1, z + 1] == 0)
+                        {
+                            var newPos = pos + new Vector3(-1 * scale, 0, 0);
+                            pillarCorner = Instantiate(pillarpiece, newPos, Quaternion.identity);
+                        }
+                    }
+
+                    if (bottom)
+                    {
+                        GameObject wallbottom = Instantiate(wallpiece, pos, Quaternion.Euler(0, 180, 0));
+                        
+                        if (map[x + 1, z] == 0 && map[x + 1, z - 1] == 0)
+                        {
+                            var newPos = pos + new Vector3(0, 0, -1 * scale);
+                            pillarCorner = Instantiate(pillarpiece, newPos, Quaternion.identity);
+                        }
+                        
+                        if (map[x - 1, z] == 0 && map[x - 1, z - 1] == 0)
+                        {
+                            var newPos = pos + new Vector3(-1 * scale, 0, -1 * scale);
+                            pillarCorner = Instantiate(pillarpiece, newPos, Quaternion.identity);
+                        }
+                    }
+
+                    if (right)
+                    {
+                        GameObject wallright = Instantiate(wallpiece, pos, Quaternion.Euler(0, 90, 0));
+                        
+                        if (map[x + 1, z + 1] == 0 && map[x, z + 1] == 0)
+                        {
+                            var newPos = pos + new Vector3(0, 0, -1 * scale);
+                            pillarCorner = Instantiate(pillarpiece, newPos, Quaternion.identity);
+                        }
+
+                        if (map[x , z - 1] == 0 && map[x + 1, z - 1] == 0)
+                        {
+                            var newPos = pos + new Vector3(1 * scale, 0, -1 * scale);
+                            pillarCorner = Instantiate(pillarpiece, newPos, Quaternion.identity);
+                        }  
+                    }
+
+                    if (left)
+                    {
+                        GameObject wallleft = Instantiate(wallpiece, pos, Quaternion.Euler(0, -90, 0));
+
+                        if (map[x - 1, z + 1] == 0 && map[x, z + 1] == 0)
+                        {
+                            var newPos = pos + new Vector3(-1 * scale, 0, 0);
+                            pillarCorner = Instantiate(pillarpiece, newPos, Quaternion.identity);
+                        }
+
+                        if (map[x - 1, z - 1] == 0 && map[x, z - 1] == 0)
+                        {
+                            var newPos = pos + new Vector3(-1 * scale, 0, -1 * scale);
+                            pillarCorner = Instantiate(pillarpiece, newPos, Quaternion.identity);
+                        }
+                    }
                 }
                 else
                 {
@@ -225,10 +296,11 @@ public class Maze : MonoBehaviour
         left = false;
         right = false;
 
-        if (x <= 0 || x >= width-1 || z <= 0 || z >= depth-1) return;
-        if(map[x, z+1] == 1) top = true;
-        if(map[x, z-1] == 1) bottom = true;
-
+        if (x <= 0 || x >= width - 1 || z <= 0 || z >= depth - 1) return;
+        if (map[x, z + 1] == 1) top = true;
+        if (map[x, z - 1] == 1) bottom = true;
+        if (map[x + 1, z] == 1) right = true;
+        if (map[x - 1, z] == 1) left = true;
     }
 
     bool Search2D(int c, int r, int[] pattern)
