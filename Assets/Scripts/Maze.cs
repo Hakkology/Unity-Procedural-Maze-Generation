@@ -38,6 +38,7 @@ public class Maze : MonoBehaviour
 
     public List<MapLocation> wallLocations;
     public List<MapLocation> corridorLocations;
+    public List<MapLocation> pillarLocations = new();
     public byte[,] map;
 
     bool top;
@@ -217,67 +218,98 @@ public class Maze : MonoBehaviour
                     {
                         GameObject walltop = Instantiate(wallpiece, pos, Quaternion.Euler(0, 0, 0));
 
-                        if (map[x + 1, z] == 0 && map[x + 1, z + 1] == 0)
+                        if (map[x + 1, z] == 0 && map[x + 1, z + 1] == 0 && !pillarLocations.Contains(new MapLocation(x, z)))
                         {
                             pillarCorner = Instantiate(pillarpiece, pos, Quaternion.identity);
+                            pillarLocations.Add(new MapLocation(x, z));
                         }
-                        
-                        if (map[x - 1, z] == 0 && map[x - 1, z + 1] == 0)
+
+                        if (map[x - 1, z] == 0 && map[x - 1, z + 1] == 0 && !pillarLocations.Contains(new MapLocation(x - 1, z)))
                         {
                             var newPos = pos + new Vector3(-1 * scale, 0, 0);
                             pillarCorner = Instantiate(pillarpiece, newPos, Quaternion.identity);
+                            pillarLocations.Add(new MapLocation(x - 1, z));
                         }
                     }
 
                     if (bottom)
                     {
                         GameObject wallbottom = Instantiate(wallpiece, pos, Quaternion.Euler(0, 180, 0));
-                        
-                        if (map[x + 1, z] == 0 && map[x + 1, z - 1] == 0)
+
+                        if (map[x + 1, z] == 0 && map[x + 1, z - 1] == 0 && !pillarLocations.Contains(new MapLocation(x, z - 1)))
                         {
                             var newPos = pos + new Vector3(0, 0, -1 * scale);
                             pillarCorner = Instantiate(pillarpiece, newPos, Quaternion.identity);
+                            pillarLocations.Add(new MapLocation(x, z - 1));
                         }
-                        
-                        if (map[x - 1, z] == 0 && map[x - 1, z - 1] == 0)
+
+                        if (map[x - 1, z] == 0 && map[x - 1, z - 1] == 0 && !pillarLocations.Contains(new MapLocation(x - 1, z - 1)))
                         {
                             var newPos = pos + new Vector3(-1 * scale, 0, -1 * scale);
                             pillarCorner = Instantiate(pillarpiece, newPos, Quaternion.identity);
+                            pillarLocations.Add(new MapLocation(x - 1, z - 1));
                         }
                     }
 
                     if (right)
                     {
                         GameObject wallright = Instantiate(wallpiece, pos, Quaternion.Euler(0, 90, 0));
-                        
-                        if (map[x + 1, z + 1] == 0 && map[x, z + 1] == 0)
+
+                        if (map[x + 1, z + 1] == 0 && map[x, z + 1] == 0 && !pillarLocations.Contains(new MapLocation(x, z - 1)))
                         {
                             var newPos = pos + new Vector3(0, 0, -1 * scale);
                             pillarCorner = Instantiate(pillarpiece, newPos, Quaternion.identity);
+                            pillarLocations.Add(new MapLocation(x, z - 1));
                         }
 
-                        if (map[x , z - 1] == 0 && map[x + 1, z - 1] == 0)
+                        if (map[x, z - 1] == 0 && map[x + 1, z - 1] == 0 && !pillarLocations.Contains(new MapLocation(x - 1, z - 1)))
                         {
                             var newPos = pos + new Vector3(1 * scale, 0, -1 * scale);
                             pillarCorner = Instantiate(pillarpiece, newPos, Quaternion.identity);
-                        }  
+                            pillarLocations.Add(new MapLocation(x - 1, z - 1));
+                        }
                     }
 
                     if (left)
                     {
                         GameObject wallleft = Instantiate(wallpiece, pos, Quaternion.Euler(0, -90, 0));
 
-                        if (map[x - 1, z + 1] == 0 && map[x, z + 1] == 0)
+                        if (map[x - 1, z + 1] == 0 && map[x, z + 1] == 0 && !pillarLocations.Contains(new MapLocation(x - 1, z)))
                         {
                             var newPos = pos + new Vector3(-1 * scale, 0, 0);
                             pillarCorner = Instantiate(pillarpiece, newPos, Quaternion.identity);
+                            pillarLocations.Add(new MapLocation(x - 1, z));
                         }
 
-                        if (map[x - 1, z - 1] == 0 && map[x, z - 1] == 0)
+                        if (map[x - 1, z - 1] == 0 && map[x, z - 1] == 0 && !pillarLocations.Contains(new MapLocation(x - 1, z - 1)))
                         {
                             var newPos = pos + new Vector3(-1 * scale, 0, -1 * scale);
                             pillarCorner = Instantiate(pillarpiece, newPos, Quaternion.identity);
+                            pillarLocations.Add(new MapLocation(x - 1, z - 1));
                         }
+                    }
+
+                    GameObject doorway;
+                    LocateDoors(x, z);
+
+                    if (top)
+                    {
+                        doorway = Instantiate(doorwaypiece, pos, Quaternion.Euler(0, 180, 0));
+                    }
+                    
+                    if (bottom)
+                    {
+                        doorway = Instantiate(doorwaypiece, pos, Quaternion.Euler(0, 0, 0));    
+                    }
+                    
+                    if (left)
+                    {
+                        doorway = Instantiate(doorwaypiece, pos, Quaternion.Euler(0, 90, 0));
+                    }
+                    
+                    if (right)
+                    {
+                        doorway = Instantiate(doorwaypiece, pos, Quaternion.Euler(0, 270, 0));    
                     }
                 }
                 else
@@ -302,6 +334,21 @@ public class Maze : MonoBehaviour
         if (map[x + 1, z] == 1) right = true;
         if (map[x - 1, z] == 1) left = true;
     }
+
+    public void LocateDoors(int x, int z)
+    {
+        top = false;
+        bottom = false;
+        left = false;
+        right = false;
+
+        if (x <= 0 || x >= width - 1 || z <= 0 || z >= depth - 1) return;
+        if (map[x, z + 1] == 0 && map[x -1, z + 1] == 1 && map[x + 1, z + 1] == 1) top = true;
+        if (map[x, z - 1] == 0 && map[x -1, z - 1] == 1 && map[x +1, z - 1] == 1) bottom = true;
+        if (map[x + 1, z] == 0 && map[x +1, z + 1] == 1 && map[x +1, z - 1] == 1) right = true;
+        if (map[x - 1, z] == 0 && map[x -1, z + 1] == 1 && map[x -1, z - 1] == 1) left = true;
+    }
+
 
     bool Search2D(int c, int r, int[] pattern)
     {
