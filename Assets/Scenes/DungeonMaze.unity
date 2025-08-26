@@ -249,6 +249,9 @@ MonoBehaviour:
   depth: 30
   scale: 6
   level: 0
+  levelDistance: 2
+  xOffset: 0
+  zOffset: 0
 --- !u!1 &521183357
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,7 +281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f550f3c4f2c7868478a20b243f6d19e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 1281112718}
+  Player: {fileID: 0}
   VerticalStraight:
     prefab: {fileID: 6715551033286075417, guid: 91eddfca1f4e245e1929ae4ff4c2e878, type: 3}
     rotation: {x: 0, y: 90, z: 0}
@@ -361,6 +364,9 @@ MonoBehaviour:
   depth: 30
   scale: 6
   level: 0
+  levelDistance: 2
+  xOffset: 0
+  zOffset: 0
 --- !u!4 &521183359
 Transform:
   m_ObjectHideFlags: 0
@@ -499,7 +505,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f550f3c4f2c7868478a20b243f6d19e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 1281112718}
+  Player: {fileID: 0}
   VerticalStraight:
     prefab: {fileID: 6715551033286075417, guid: 91eddfca1f4e245e1929ae4ff4c2e878, type: 3}
     rotation: {x: 0, y: 90, z: 0}
@@ -582,6 +588,9 @@ MonoBehaviour:
   depth: 30
   scale: 6
   level: 0
+  levelDistance: 2
+  xOffset: 0
+  zOffset: 0
 --- !u!4 &1253238693
 Transform:
   m_ObjectHideFlags: 0
@@ -805,7 +814,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f550f3c4f2c7868478a20b243f6d19e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 1281112718}
+  Player: {fileID: 0}
   VerticalStraight:
     prefab: {fileID: 6715551033286075417, guid: 91eddfca1f4e245e1929ae4ff4c2e878, type: 3}
     rotation: {x: 0, y: 90, z: 0}
@@ -888,6 +897,9 @@ MonoBehaviour:
   depth: 30
   scale: 6
   level: 0
+  levelDistance: 2
+  xOffset: 0
+  zOffset: 0
 --- !u!4 &1824679770
 Transform:
   m_ObjectHideFlags: 0
