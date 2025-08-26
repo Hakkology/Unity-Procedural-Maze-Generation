@@ -18,6 +18,7 @@ public class CorridorMaze : MonoBehaviour
     public Pieces[,] piecePlaces;
     public int scale = 6;
     public int level = 0;
+    public float levelDistance = 2;
 
 
     [Header("Straight piece References")]
@@ -261,7 +262,7 @@ public class CorridorMaze : MonoBehaviour
 
     private GameObject SpawnPiece(Module module, Vector3 position)
     {
-        return Instantiate(module.prefab, position, Quaternion.Euler(module.rotation));
+        return Instantiate(module.prefab, position, Quaternion.Euler(module.rotation), this.transform);
     }
     
     private void AssignPiece(MapLocation loc, PieceType type, GameObject model)

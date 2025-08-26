@@ -53,6 +53,11 @@ public class DungeonMaze : MonoBehaviour
     public int width = 30; //x length
     public int depth = 30; //z length
     public int scale = 6;
+    public int level = 0;
+    public float levelDistance = 2.0f;
+    public float xOffset = 0;
+    public float zOffset = 0;
+
 
     public List<MapLocation> wallLocations;
     public List<MapLocation> corridorLocations;
@@ -70,12 +75,16 @@ public class DungeonMaze : MonoBehaviour
     {
         wallLocations = new List<MapLocation>();
         corridorLocations = new List<MapLocation>();
+    }
 
+    public void Build()
+    {
         InitialiseMap();
         GenerateMap();
         GenerateRooms(4, 3, 7);
         DrawMap();
-        PlaceFPC();
+        if (Player != null)
+            PlaceFPC();
     }
 
     public virtual void PlaceFPC()
@@ -138,10 +147,11 @@ public class DungeonMaze : MonoBehaviour
 
     void DrawMap()
     {
+        int height = (int)(level * scale * levelDistance);
         for (int z = 0; z < depth; z++)
             for (int x = 0; x < width; x++)
             {
-                Vector3 pos = new Vector3(x * scale, 0, z * scale); // Save pos
+                Vector3 pos = new Vector3(x * scale, height, z * scale); // Save pos
 
                 if (map[x, z] == 1)
                 {
@@ -246,8 +256,8 @@ public class DungeonMaze : MonoBehaviour
                         (CountDiagonalNeighbours(x, z) >= 1 && CountSquareNeighbours(x, z) > 1
                          || CountSquareNeighbours(x, z) >= 1 && CountDiagonalNeighbours(x, z) > 1))
                 {
-                    GameObject floor = Instantiate(Floorpiece.prefab, pos, Quaternion.identity);
-                    GameObject ceiling = Instantiate(Ceilingpiece.prefab, pos, Quaternion.identity);
+                    GameObject floor = Instantiate(Floorpiece.prefab, pos, Quaternion.identity, this.transform);
+                    GameObject ceiling = Instantiate(Ceilingpiece.prefab, pos, Quaternion.identity, this.transform);
 
                     AssignPiece(new MapLocation(x, z), PieceType.Room, floor);
 
@@ -261,7 +271,7 @@ public class DungeonMaze : MonoBehaviour
 
                         if (map[x + 1, z] == 0 && map[x + 1, z + 1] == 0 && !pillarLocations.Contains(new MapLocation(x, z)))
                         {
-                            pillarCorner = Instantiate(Pillarpiece.prefab, pos, Quaternion.identity);
+                            pillarCorner = Instantiate(Pillarpiece.prefab, pos, Quaternion.identity, this.transform);
                             pillarLocations.Add(new MapLocation(x, z));
                             pillarCorner.transform.localScale = enlargingPillarScale;
                         }
@@ -269,7 +279,7 @@ public class DungeonMaze : MonoBehaviour
                         if (map[x - 1, z] == 0 && map[x - 1, z + 1] == 0 && !pillarLocations.Contains(new MapLocation(x - 1, z)))
                         {
                             var newPos = pos + new Vector3(-1 * scale, 0, 0);
-                            pillarCorner = Instantiate(Pillarpiece.prefab, newPos, Quaternion.identity);
+                            pillarCorner = Instantiate(Pillarpiece.prefab, newPos, Quaternion.identity, this.transform);
                             pillarLocations.Add(new MapLocation(x - 1, z));
                             pillarCorner.transform.localScale = enlargingPillarScale;
                         }
@@ -283,7 +293,7 @@ public class DungeonMaze : MonoBehaviour
                         if (map[x + 1, z] == 0 && map[x + 1, z - 1] == 0 && !pillarLocations.Contains(new MapLocation(x, z - 1)))
                         {
                             var newPos = pos + new Vector3(0, 0, -1 * scale);
-                            pillarCorner = Instantiate(Pillarpiece.prefab, newPos, Quaternion.identity);
+                            pillarCorner = Instantiate(Pillarpiece.prefab, newPos, Quaternion.identity, this.transform);
                             pillarLocations.Add(new MapLocation(x, z - 1));
                             pillarCorner.transform.localScale = enlargingPillarScale;
                         }
@@ -291,7 +301,7 @@ public class DungeonMaze : MonoBehaviour
                         if (map[x - 1, z] == 0 && map[x - 1, z - 1] == 0 && !pillarLocations.Contains(new MapLocation(x - 1, z - 1)))
                         {
                             var newPos = pos + new Vector3(-1 * scale, 0, -1 * scale);
-                            pillarCorner = Instantiate(Pillarpiece.prefab, newPos, Quaternion.identity);
+                            pillarCorner = Instantiate(Pillarpiece.prefab, newPos, Quaternion.identity, this.transform);
                             pillarLocations.Add(new MapLocation(x - 1, z - 1));
                             pillarCorner.transform.localScale = enlargingPillarScale;
                         }
@@ -304,7 +314,7 @@ public class DungeonMaze : MonoBehaviour
                         if (map[x + 1, z + 1] == 0 && map[x, z + 1] == 0 && !pillarLocations.Contains(new MapLocation(x, z - 1)))
                         {
                             var newPos = pos + new Vector3(0, 0, -1 * scale);
-                            pillarCorner = Instantiate(Pillarpiece.prefab, newPos, Quaternion.identity);
+                            pillarCorner = Instantiate(Pillarpiece.prefab, newPos, Quaternion.identity, this.transform);
                             pillarLocations.Add(new MapLocation(x, z - 1));
                             pillarCorner.transform.localScale = enlargingPillarScale;
                         }
@@ -312,7 +322,7 @@ public class DungeonMaze : MonoBehaviour
                         if (map[x, z - 1] == 0 && map[x + 1, z - 1] == 0 && !pillarLocations.Contains(new MapLocation(x - 1, z - 1)))
                         {
                             var newPos = pos + new Vector3(1 * scale, 0, -1 * scale);
-                            pillarCorner = Instantiate(Pillarpiece.prefab, newPos, Quaternion.identity);
+                            pillarCorner = Instantiate(Pillarpiece.prefab, newPos, Quaternion.identity, this.transform);
                             pillarLocations.Add(new MapLocation(x - 1, z - 1));
                             pillarCorner.transform.localScale = enlargingPillarScale;
                         }
@@ -326,7 +336,7 @@ public class DungeonMaze : MonoBehaviour
                         if (map[x - 1, z + 1] == 0 && map[x, z + 1] == 0 && !pillarLocations.Contains(new MapLocation(x - 1, z)))
                         {
                             var newPos = pos + new Vector3(-1 * scale, 0, 0);
-                            pillarCorner = Instantiate(Pillarpiece.prefab, newPos, Quaternion.identity);
+                            pillarCorner = Instantiate(Pillarpiece.prefab, newPos, Quaternion.identity, this.transform);
                             pillarLocations.Add(new MapLocation(x - 1, z));
                             pillarCorner.transform.localScale = enlargingPillarScale;
                         }
@@ -334,7 +344,7 @@ public class DungeonMaze : MonoBehaviour
                         if (map[x - 1, z - 1] == 0 && map[x, z - 1] == 0 && !pillarLocations.Contains(new MapLocation(x - 1, z - 1)))
                         {
                             var newPos = pos + new Vector3(-1 * scale, 0, -1 * scale);
-                            pillarCorner = Instantiate(Pillarpiece.prefab, newPos, Quaternion.identity);
+                            pillarCorner = Instantiate(Pillarpiece.prefab, newPos, Quaternion.identity, this.transform);
                             pillarLocations.Add(new MapLocation(x - 1, z - 1));
                             pillarCorner.transform.localScale = enlargingPillarScale;
                         }
@@ -353,7 +363,7 @@ public class DungeonMaze : MonoBehaviour
             {
                 if (piecePlaces[x, z]._piece != PieceType.Room) continue;
 
-                Vector3 pos = new Vector3(x * scale, 0, z * scale); // Save pos
+                Vector3 pos = new Vector3(x * scale, height, z * scale); // Save pos
                 GameObject doorway;
                 LocateDoors(x, z);
 
@@ -473,6 +483,6 @@ public class DungeonMaze : MonoBehaviour
 
     private GameObject SpawnPiece(Module module, Vector3 position)
     {
-        return Instantiate(module.prefab, position, Quaternion.Euler(module.rotation));
+        return Instantiate(module.prefab, position, Quaternion.Euler(module.rotation), this.transform);
     }
 }

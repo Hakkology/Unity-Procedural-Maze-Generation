@@ -25,6 +25,7 @@ public class MazeManager : MonoBehaviour
             maze.width = width;
             maze.depth = depth;
             maze.level = level++;
+            maze.levelDistance = 2;
             maze.Build();
         }
 
@@ -40,8 +41,8 @@ public class MazeManager : MonoBehaviour
                             Destroy(mazes[mazelvl].piecePlaces[x, z]._model);
                             Destroy(mazes[mazelvl + 1].piecePlaces[x, z]._model);
 
-                            Vector3 downPosition = new Vector3(mazes[mazelvl].scale * x, mazes[mazelvl].scale * mazes[mazelvl].level * 2, mazes[mazelvl].scale * z);
-                            Vector3 upPosition = new Vector3(mazes[mazelvl+1].scale * x, mazes[mazelvl+1].scale * mazes[mazelvl+1].level * 2, mazes[mazelvl+1].scale * z);
+                            Vector3 downPosition = new Vector3(mazes[mazelvl].scale * x, mazes[mazelvl].scale * mazes[mazelvl].level * mazes[mazelvl].levelDistance, mazes[mazelvl].scale * z);
+                            Vector3 upPosition = new Vector3(mazes[mazelvl+1].scale * x, mazes[mazelvl+1].scale * mazes[mazelvl+1].level * mazes[mazelvl].levelDistance, mazes[mazelvl+1].scale * z);
 
                             var upModel = Instantiate(StraightManHoleLadder, upPosition, Quaternion.identity);
                             var ladderModel = Instantiate(StraightManHoleUp, downPosition, Quaternion.identity);
@@ -56,8 +57,8 @@ public class MazeManager : MonoBehaviour
                             Destroy(mazes[mazelvl].piecePlaces[x, z]._model);
                             Destroy(mazes[mazelvl+1].piecePlaces[x, z]._model);
 
-                            Vector3 downPosition = new Vector3(mazes[mazelvl].scale * x, mazes[mazelvl].scale * mazes[mazelvl].level * 2, mazes[mazelvl].scale * z);
-                            Vector3 upPosition = new Vector3(mazes[mazelvl+1].scale * x, mazes[mazelvl+1].scale * mazes[mazelvl+1].level * 2, mazes[mazelvl+1].scale * z);
+                            Vector3 downPosition = new Vector3(mazes[mazelvl].scale * x, mazes[mazelvl].scale * mazes[mazelvl].level * mazes[mazelvl].levelDistance, mazes[mazelvl].scale * z);
+                            Vector3 upPosition = new Vector3(mazes[mazelvl+1].scale * x, mazes[mazelvl+1].scale * mazes[mazelvl+1].level * mazes[mazelvl].levelDistance, mazes[mazelvl+1].scale * z);
 
                             var upModel = Instantiate(DeadendManHoleLadder, upPosition, Quaternion.identity);
                             var ladderModel = Instantiate(DeadendManHoleUp, downPosition, Quaternion.identity);
