@@ -141,7 +141,7 @@ public class CorridorMaze : MonoBehaviour
                 }
                 else if (Search2D(x, z, new int[] { 5, 0, 1, 1, 0, 0, 5, 1, 5 })) //lower right corner
                 {
-                    GameObject go = SpawnPiece(LeftDownCorner, pos);
+                    GameObject go = SpawnPiece(RightDownCorner, pos);
                     // go.transform.position = new Vector3(x * scale, 0, z * scale);
                 }
                 else if (Search2D(x, z, new int[] { 1, 0, 5, 5, 0, 1, 5, 1, 5 })) //lower left corner

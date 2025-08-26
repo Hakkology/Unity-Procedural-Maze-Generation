@@ -466,16 +466,16 @@ MonoBehaviour:
     rotation: {x: 0, y: 0, z: 0}
   Endpiece:
     prefab: {fileID: 5370299261866360975, guid: 64f670676d38e5e8fb44ef293c493595, type: 3}
-    rotation: {x: 0, y: -90, z: 0}
+    rotation: {x: 0, y: 0, z: 0}
   EndpieceUpsideDown:
     prefab: {fileID: 5370299261866360975, guid: 64f670676d38e5e8fb44ef293c493595, type: 3}
-    rotation: {x: 0, y: 90, z: 0}
+    rotation: {x: 0, y: 180, z: 0}
   EndpieceRight:
     prefab: {fileID: 5370299261866360975, guid: 64f670676d38e5e8fb44ef293c493595, type: 3}
-    rotation: {x: 0, y: 180, z: 0}
+    rotation: {x: 0, y: -90, z: 0}
   EndpieceLeft:
     prefab: {fileID: 5370299261866360975, guid: 64f670676d38e5e8fb44ef293c493595, type: 3}
-    rotation: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 90, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
