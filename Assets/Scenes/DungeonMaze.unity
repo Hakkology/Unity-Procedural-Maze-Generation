@@ -232,10 +232,10 @@ MonoBehaviour:
     rotation: {x: 0, y: 0, z: 0}
   DoorRight:
     prefab: {fileID: 5394584503347338195, guid: a54ce3626b2650a4a81d0b66a6cdd8ae, type: 3}
-    rotation: {x: 0, y: 90, z: 0}
+    rotation: {x: 0, y: -90, z: 0}
   DoorLeft:
     prefab: {fileID: 5394584503347338195, guid: a54ce3626b2650a4a81d0b66a6cdd8ae, type: 3}
-    rotation: {x: 0, y: -90, z: 0}
+    rotation: {x: 0, y: 90, z: 0}
   Floorpiece:
     prefab: {fileID: 2966578154763797965, guid: 6f79f7af2f2424bb6ae24b086b365eae, type: 3}
     rotation: {x: 0, y: 0, z: 0}

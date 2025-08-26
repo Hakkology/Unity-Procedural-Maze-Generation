@@ -361,25 +361,25 @@ public class DungeonMaze : MonoBehaviour
                 if (top)
                 {
                     // doorway = Instantiate(doorwaypiece, newDoorwayPos, Quaternion.Euler(0, 180, 0));
-                    doorway = SpawnPiece(DoorTop, pos);
+                    doorway = SpawnPiece(DoorTop, newDoorwayPos);
                 }
 
                 if (bottom)
                 {
                     // doorway = Instantiate(doorwaypiece, newDoorwayPos, Quaternion.Euler(0, 0, 0));
-                    doorway = SpawnPiece(DoorBottom, pos);
+                    doorway = SpawnPiece(DoorBottom, newDoorwayPos);
                 }
 
                 if (left)
                 {
                     // doorway = Instantiate(doorwaypiece, newDoorwayPos, Quaternion.Euler(0, 90, 0));
-                    doorway = SpawnPiece(DoorLeft, pos);
+                    doorway = SpawnPiece(DoorLeft, newDoorwayPos);
                 }
 
                 if (right)
                 {
                     // doorway = Instantiate(doorwaypiece, newDoorwayPos, Quaternion.Euler(0, 270, 0));
-                    doorway = SpawnPiece(DoorRight, pos);
+                    doorway = SpawnPiece(DoorRight, newDoorwayPos);
                 }
             }
     }
