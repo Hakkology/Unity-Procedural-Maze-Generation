@@ -6,18 +6,48 @@ public class DungeonMaze : MonoBehaviour
     [Header("Player Reference")]
     public GameObject Player;
 
-    [Header("Maze piece References")]
-    public GameObject straight;
-    public GameObject crossroad;
-    public GameObject deadend; 
-    public GameObject cornerstraight; 
-    public GameObject cornercurved; 
-    public GameObject tjunction; 
-    public GameObject floorpiece;
-    public GameObject wallpiece;
-    public GameObject ceilingpiece;
-    public GameObject pillarpiece;
-    public GameObject doorwaypiece;
+    [Header("Straight piece References")]
+    public Module VerticalStraight;
+    public Module HorizontalStraight;
+
+    [Header("Crossroad piece References")]
+    public Module Crossroad;
+
+    [Header("Endpiece piece References")]
+    public Module Endpiece;
+    public Module EndpieceUpsideDown;
+    public Module EndpieceRight;
+    public Module EndpieceLeft;
+
+    [Header("Corner piece References")]
+    public Module RightUpCorner;
+    public Module RightDownCorner;
+    public Module LeftUpCorner;
+    public Module LeftDownCorner;
+    // public Module cornercurved;
+
+    [Header("T-Intersection piece References")]
+    public Module TIntersection;
+    public Module TIntersectionUpsideDown;
+    public Module TIntersectionLeft;
+    public Module TIntersectionRight;
+
+    [Header("Wall piece References")]
+    public Module WallpieceTop;
+    public Module WallpieceBottom;
+    public Module WallpieceRight;
+    public Module WallpieceLeft;
+
+    [Header("Doorway piece References")]
+    public Module DoorTop;
+    public Module DoorBottom;
+    public Module DoorRight;
+    public Module DoorLeft;
+
+    [Header("Remaining Room piece References")]
+    public Module Floorpiece;
+    public Module Ceilingpiece;
+    public Module Pillarpiece;
 
     [Header("Maze measurement Details")]
     public int width = 30; //x length
@@ -27,7 +57,9 @@ public class DungeonMaze : MonoBehaviour
     public List<MapLocation> wallLocations;
     public List<MapLocation> corridorLocations;
     public List<MapLocation> pillarLocations = new();
+
     public byte[,] map;
+    public Pieces[,] piecePlaces;
 
     bool top;
     bool bottom;
@@ -62,6 +94,7 @@ public class DungeonMaze : MonoBehaviour
     void InitialiseMap()
     {
         map = new byte[width, depth];
+        piecePlaces = new Pieces[width, depth];
         for (int z = 0; z < depth; z++)
             for (int x = 0; x < width; x++)
             {
@@ -92,7 +125,7 @@ public class DungeonMaze : MonoBehaviour
             int startZ = Random.Range(3, depth - 3);
             int roomWidth = Random.Range(minSize, maxSize);
             int roomDepth = Random.Range(minSize, maxSize);
-            
+
             for (int x = startX; x < width - 3 && x < startX + roomWidth; x++)
             {
                 for (int z = startZ; z < depth - 3 && z < startZ + roomDepth; z++)
@@ -116,197 +149,196 @@ public class DungeonMaze : MonoBehaviour
                     // GameObject wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
                     // wall.transform.localScale = new Vector3(scale, scale, scale);
                     // wall.transform.position = pos;
+                    AssignPiece(new MapLocation(x, z), PieceType.Wall, null);
                 }
                 else if (Search2D(x, z, new int[] { 5, 0, 5, 1, 0, 1, 5, 0, 5 })) // vertical straight
                 {
-                    // Procedural mace piece add code.
-
-                    GameObject wall = Instantiate(straight, pos, Quaternion.Euler(0, 90, 0));
+                    // GameObject piece = Instantiate(straight, pos, Quaternion.Euler(0, 90, 0));
+                    GameObject piece = SpawnPiece(VerticalStraight, pos);
+                    AssignPiece(new MapLocation(x, z), PieceType.Vertical_Straight, piece);
                 }
                 else if (Search2D(x, z, new int[] { 5, 1, 5, 0, 0, 0, 5, 1, 5 })) // horizontal straight
                 {
                     // Procedural mace piece add code.
-                    GameObject wall = Instantiate(straight, pos, Quaternion.identity);
+                    // GameObject piece = Instantiate(straight, pos, Quaternion.identity);
+                    GameObject piece = SpawnPiece(HorizontalStraight, pos);
+                    AssignPiece(new MapLocation(x, z), PieceType.Horizontal_Straight, piece);
                 }
-                else if (Search2D(x, z, new int[] { 1, 0, 1, 0, 0, 0, 1, 0, 1 })) // Tjunction
+                else if (Search2D(x, z, new int[] { 1, 0, 1, 0, 0, 0, 1, 0, 1 })) // Crossroads
                 {
                     // Procedural mace piece add code.
-                    GameObject wall = Instantiate(crossroad, pos, Quaternion.identity);
+                    // GameObject piece = Instantiate(crossroad, pos, Quaternion.identity);
+                    GameObject piece = SpawnPiece(Crossroad, pos);
+                    AssignPiece(new MapLocation(x, z), PieceType.Crossroad, piece);
                 }
                 else if (Search2D(x, z, new int[] { 5, 1, 5, 0, 0, 1, 5, 1, 5 })) // horizontal right end
                 {
-                    // Procedural mace piece add code.
-                    GameObject wall = Instantiate(deadend, pos, Quaternion.Euler(0, 180, 0));
+                    // GameObject piece = Instantiate(deadend, pos, Quaternion.Euler(0, 180, 0));
+                    GameObject piece = SpawnPiece(EndpieceRight, pos);
+                    AssignPiece(new MapLocation(x, z), PieceType.DeadToright, piece);
                 }
                 else if (Search2D(x, z, new int[] { 5, 1, 5, 1, 0, 0, 5, 1, 5 })) // horizontal left end
                 {
-                    // Procedural mace piece add code.
-                    GameObject wall = Instantiate(deadend, pos, Quaternion.identity);
+                    // GameObject piece = Instantiate(deadend, pos, Quaternion.identity);
+                    GameObject piece = SpawnPiece(EndpieceLeft, pos);
+                    AssignPiece(new MapLocation(x, z), PieceType.DeadToLeft, piece);
                 }
                 else if (Search2D(x, z, new int[] { 5, 1, 5, 1, 0, 1, 5, 0, 5 })) // vertical up end
                 {
-                    // Procedural mace piece add code.
-                    GameObject wall = Instantiate(deadend, pos, Quaternion.Euler(0, 90, 0));
+                    // GameObject piece = Instantiate(deadend, pos, Quaternion.Euler(0, 90, 0));
+                    GameObject piece = SpawnPiece(Endpiece, pos);
+                    AssignPiece(new MapLocation(x, z), PieceType.DeadEnd, piece);
                 }
                 else if (Search2D(x, z, new int[] { 5, 0, 5, 1, 0, 1, 5, 1, 5 })) // vertical down end
                 {
-                    // Procedural mace piece add code.
-                    GameObject wall = Instantiate(deadend, pos, Quaternion.Euler(0, -90, 0));
+                    // GameObject piece = Instantiate(deadend, pos, Quaternion.Euler(0, -90, 0));
+                    GameObject piece = SpawnPiece(EndpieceUpsideDown, pos);
+                    AssignPiece(new MapLocation(x, z), PieceType.DeadUpsideDown, piece);
                 }
-                else if (Search2D(x, z, new int[] { 5, 1, 5, 0, 0, 1, 1, 0, 5 }))
+                else if (Search2D(x, z, new int[] { 5, 1, 5, 0, 0, 1, 1, 0, 5 })) // upper left corner
                 {
-                    // Procedural mace piece add code.
-                    GameObject wall = Instantiate(cornerstraight, pos, Quaternion.Euler(0, 180, 0));
+                    // GameObject piece = Instantiate(cornerstraight, pos, Quaternion.Euler(0, 180, 0));
+                    GameObject piece = SpawnPiece(LeftUpCorner, pos);
+                    AssignPiece(new MapLocation(x, z), PieceType.Left_Up_Corner, piece);
                 }
-                else if (Search2D(x, z, new int[] { 5, 1, 5, 1, 0, 0, 5, 0, 1 }))
+                else if (Search2D(x, z, new int[] { 5, 1, 5, 1, 0, 0, 5, 0, 1 })) // upper right corner
                 {
-                    // Procedural mace piece add code.
-                    GameObject wall = Instantiate(cornerstraight, pos, Quaternion.Euler(0, 90, 0));
+                    // GameObject piece = Instantiate(cornerstraight, pos, Quaternion.Euler(0, 90, 0));
+                    GameObject piece = SpawnPiece(RightUpCorner, pos);
+                    AssignPiece(new MapLocation(x, z), PieceType.Right_Up_Corner, piece);
                 }
-                else if (Search2D(x, z, new int[] { 5, 0, 1, 1, 0, 0, 5, 1, 5 }))
+                else if (Search2D(x, z, new int[] { 5, 0, 1, 1, 0, 0, 5, 1, 5 })) // lower right corner
                 {
-                    // Procedural mace piece add code.
-                    GameObject wall = Instantiate(cornerstraight, pos, Quaternion.Euler(0, 0, 0));
+                    // GameObject piece = Instantiate(cornerstraight, pos, Quaternion.Euler(0, 0, 0));
+                    GameObject piece = SpawnPiece(RightDownCorner, pos);
+                    AssignPiece(new MapLocation(x, z), PieceType.Right_Down_Corner, piece);
                 }
-                else if (Search2D(x, z, new int[] { 1, 0, 5, 5, 0, 1, 5, 1, 5 }))
+                else if (Search2D(x, z, new int[] { 1, 0, 5, 5, 0, 1, 5, 1, 5 })) // lower left corner
                 {
-                    // Procedural mace piece add code.
-                    GameObject wall = Instantiate(cornerstraight, pos, Quaternion.Euler(0, -90, 0));
+                    // GameObject piece = Instantiate(cornerstraight, pos, Quaternion.Euler(0, -90, 0));
+                    GameObject piece = SpawnPiece(LeftDownCorner, pos);
+                    AssignPiece(new MapLocation(x, z), PieceType.Left_Down_Corner, piece);
                 }
-                else if (Search2D(x, z, new int[] { 1, 0, 1, 0, 0, 0, 5, 1, 5 }))
+                else if (Search2D(x, z, new int[] { 1, 0, 1, 0, 0, 0, 5, 1, 5 })) // tjunction reverse
                 {
-                    // Procedural mace piece add code.
-                    GameObject wall = Instantiate(tjunction, pos, Quaternion.Euler(0, -90, 0));
+                    // GameObject piece = Instantiate(tjunction, pos, Quaternion.Euler(0, -90, 0));
+                    GameObject piece = SpawnPiece(TIntersectionUpsideDown, pos);
+                    AssignPiece(new MapLocation(x, z), PieceType.TUpsideDown, piece);
                 }
-                else if (Search2D(x, z, new int[] { 5, 1, 5, 0, 0, 0, 1, 0, 1 }))
+                else if (Search2D(x, z, new int[] { 5, 1, 5, 0, 0, 0, 1, 0, 1 })) // Tjunction
                 {
-                    // Procedural mace piece add code.
-                    GameObject wall = Instantiate(tjunction, pos, Quaternion.Euler(0, 90, 0));
+                    // GameObject piece = Instantiate(tjunction, pos, Quaternion.Euler(0, 90, 0));
+                    GameObject piece = SpawnPiece(TIntersection, pos);
+                    AssignPiece(new MapLocation(x, z), PieceType.T_Junction, piece);
                 }
-                else if (Search2D(x, z, new int[] { 1, 0, 5, 0, 0, 1, 1, 0, 5 }))
+                else if (Search2D(x, z, new int[] { 1, 0, 5, 0, 0, 1, 1, 0, 5 })) // tjunction right
                 {
-                    // Procedural mace piece add code.15
-                    GameObject wall = Instantiate(tjunction, pos, Quaternion.Euler(0, 180, 0));
+                    // GameObject piece = Instantiate(tjunction, pos, Quaternion.Euler(0, 180, 0));
+                    GameObject piece = SpawnPiece(TIntersectionRight, pos);
+                    AssignPiece(new MapLocation(x, z), PieceType.TToRight, piece);
                 }
-                else if (Search2D(x, z, new int[] { 5, 0, 1, 1, 0, 0, 5, 0, 1 }))
+                else if (Search2D(x, z, new int[] { 5, 0, 1, 1, 0, 0, 5, 0, 1 })) // tjunction left
                 {
-                    // Procedural mace piece add code.
-                    GameObject wall = Instantiate(tjunction, pos, Quaternion.Euler(0, 0, 0));
+                    // GameObject piece = Instantiate(tjunction, pos, Quaternion.Euler(0, 0, 0));
+                    GameObject piece = SpawnPiece(TIntersectionLeft, pos);
+                    AssignPiece(new MapLocation(x, z), PieceType.TToLeft, piece);
                 }
                 else if (map[x, z] == 0 &&
                         (CountDiagonalNeighbours(x, z) >= 1 && CountSquareNeighbours(x, z) > 1
                          || CountSquareNeighbours(x, z) >= 1 && CountDiagonalNeighbours(x, z) > 1))
                 {
-                    GameObject floor = Instantiate(floorpiece, pos, Quaternion.identity);
-                    GameObject ceiling = Instantiate(ceilingpiece, pos, Quaternion.identity);
+                    GameObject floor = Instantiate(Floorpiece.prefab, pos, Quaternion.identity);
+                    GameObject ceiling = Instantiate(Ceilingpiece.prefab, pos, Quaternion.identity);
+
+                    AssignPiece(new MapLocation(x, z), PieceType.Room, floor);
 
                     GameObject pillarCorner;
+                    Vector3 enlargingPillarScale = new Vector3(1.01f, 1, 1.01f);
                     LocateWalls(x, z);
                     if (top)
                     {
-                        GameObject walltop = Instantiate(wallpiece, pos, Quaternion.Euler(0, 0, 0));
+                        // GameObject walltop = Instantiate(wallpiece, pos, Quaternion.Euler(0, 0, 0));
+                        GameObject walltop = SpawnPiece(WallpieceTop, pos);
 
                         if (map[x + 1, z] == 0 && map[x + 1, z + 1] == 0 && !pillarLocations.Contains(new MapLocation(x, z)))
                         {
-                            pillarCorner = Instantiate(pillarpiece, pos, Quaternion.identity);
+                            pillarCorner = Instantiate(Pillarpiece.prefab, pos, Quaternion.identity);
                             pillarLocations.Add(new MapLocation(x, z));
-                            pillarCorner.transform.localScale = new Vector3(1.01f, 1, 1.01f);
+                            pillarCorner.transform.localScale = enlargingPillarScale;
                         }
 
                         if (map[x - 1, z] == 0 && map[x - 1, z + 1] == 0 && !pillarLocations.Contains(new MapLocation(x - 1, z)))
                         {
                             var newPos = pos + new Vector3(-1 * scale, 0, 0);
-                            pillarCorner = Instantiate(pillarpiece, newPos, Quaternion.identity);
+                            pillarCorner = Instantiate(Pillarpiece.prefab, newPos, Quaternion.identity);
                             pillarLocations.Add(new MapLocation(x - 1, z));
-                            pillarCorner.transform.localScale = new Vector3(1.01f, 1, 1.01f);
+                            pillarCorner.transform.localScale = enlargingPillarScale;
                         }
                     }
 
                     if (bottom)
                     {
-                        GameObject wallbottom = Instantiate(wallpiece, pos, Quaternion.Euler(0, 180, 0));
+                        // GameObject wallbottom = Instantiate(wallpiece, pos, Quaternion.Euler(0, 180, 0));
+                        GameObject wallbottom = SpawnPiece(WallpieceBottom, pos);
 
                         if (map[x + 1, z] == 0 && map[x + 1, z - 1] == 0 && !pillarLocations.Contains(new MapLocation(x, z - 1)))
                         {
                             var newPos = pos + new Vector3(0, 0, -1 * scale);
-                            pillarCorner = Instantiate(pillarpiece, newPos, Quaternion.identity);
+                            pillarCorner = Instantiate(Pillarpiece.prefab, newPos, Quaternion.identity);
                             pillarLocations.Add(new MapLocation(x, z - 1));
-                            pillarCorner.transform.localScale = new Vector3(1.01f, 1, 1.01f);
+                            pillarCorner.transform.localScale = enlargingPillarScale;
                         }
 
                         if (map[x - 1, z] == 0 && map[x - 1, z - 1] == 0 && !pillarLocations.Contains(new MapLocation(x - 1, z - 1)))
                         {
                             var newPos = pos + new Vector3(-1 * scale, 0, -1 * scale);
-                            pillarCorner = Instantiate(pillarpiece, newPos, Quaternion.identity);
+                            pillarCorner = Instantiate(Pillarpiece.prefab, newPos, Quaternion.identity);
                             pillarLocations.Add(new MapLocation(x - 1, z - 1));
-                            pillarCorner.transform.localScale = new Vector3(1.01f, 1, 1.01f);
+                            pillarCorner.transform.localScale = enlargingPillarScale;
                         }
                     }
 
                     if (right)
                     {
-                        GameObject wallright = Instantiate(wallpiece, pos, Quaternion.Euler(0, 90, 0));
-
+                        // GameObject wallright = Instantiate(wallpiece, pos, Quaternion.Euler(0, 90, 0));
+                        GameObject wallright = SpawnPiece(WallpieceRight, pos);
                         if (map[x + 1, z + 1] == 0 && map[x, z + 1] == 0 && !pillarLocations.Contains(new MapLocation(x, z - 1)))
                         {
                             var newPos = pos + new Vector3(0, 0, -1 * scale);
-                            pillarCorner = Instantiate(pillarpiece, newPos, Quaternion.identity);
+                            pillarCorner = Instantiate(Pillarpiece.prefab, newPos, Quaternion.identity);
                             pillarLocations.Add(new MapLocation(x, z - 1));
-                            pillarCorner.transform.localScale = new Vector3(1.01f, 1, 1.01f);
+                            pillarCorner.transform.localScale = enlargingPillarScale;
                         }
 
                         if (map[x, z - 1] == 0 && map[x + 1, z - 1] == 0 && !pillarLocations.Contains(new MapLocation(x - 1, z - 1)))
                         {
                             var newPos = pos + new Vector3(1 * scale, 0, -1 * scale);
-                            pillarCorner = Instantiate(pillarpiece, newPos, Quaternion.identity);
+                            pillarCorner = Instantiate(Pillarpiece.prefab, newPos, Quaternion.identity);
                             pillarLocations.Add(new MapLocation(x - 1, z - 1));
-                            pillarCorner.transform.localScale = new Vector3(1.01f, 1, 1.01f);
+                            pillarCorner.transform.localScale = enlargingPillarScale;
                         }
                     }
 
                     if (left)
                     {
-                        GameObject wallleft = Instantiate(wallpiece, pos, Quaternion.Euler(0, -90, 0));
+                        // GameObject wallleft = Instantiate(wallpiece, pos, Quaternion.Euler(0, -90, 0));
+                        GameObject wallleft = SpawnPiece(WallpieceLeft, pos);
 
                         if (map[x - 1, z + 1] == 0 && map[x, z + 1] == 0 && !pillarLocations.Contains(new MapLocation(x - 1, z)))
                         {
                             var newPos = pos + new Vector3(-1 * scale, 0, 0);
-                            pillarCorner = Instantiate(pillarpiece, newPos, Quaternion.identity);
+                            pillarCorner = Instantiate(Pillarpiece.prefab, newPos, Quaternion.identity);
                             pillarLocations.Add(new MapLocation(x - 1, z));
-                            pillarCorner.transform.localScale = new Vector3(1.01f, 1, 1.01f);
+                            pillarCorner.transform.localScale = enlargingPillarScale;
                         }
 
                         if (map[x - 1, z - 1] == 0 && map[x, z - 1] == 0 && !pillarLocations.Contains(new MapLocation(x - 1, z - 1)))
                         {
                             var newPos = pos + new Vector3(-1 * scale, 0, -1 * scale);
-                            pillarCorner = Instantiate(pillarpiece, newPos, Quaternion.identity);
+                            pillarCorner = Instantiate(Pillarpiece.prefab, newPos, Quaternion.identity);
                             pillarLocations.Add(new MapLocation(x - 1, z - 1));
-                            pillarCorner.transform.localScale = new Vector3(1.01f, 1, 1.01f);
+                            pillarCorner.transform.localScale = enlargingPillarScale;
                         }
-                    }
-
-                    GameObject doorway;
-                    LocateDoors(x, z);
-
-                    Vector3 newDoorwayPos = pos + new Vector3(0, 0, 0.01f);
-                    if (top)
-                    {
-                        doorway = Instantiate(doorwaypiece, newDoorwayPos, Quaternion.Euler(0, 180, 0));
-                    }
-                    
-                    if (bottom)
-                    {
-                        doorway = Instantiate(doorwaypiece, newDoorwayPos, Quaternion.Euler(0, 0, 0));    
-                    }
-                    
-                    if (left)
-                    {
-                        doorway = Instantiate(doorwaypiece, newDoorwayPos, Quaternion.Euler(0, 90, 0));
-                    }
-                    
-                    if (right)
-                    {
-                        doorway = Instantiate(doorwaypiece, newDoorwayPos, Quaternion.Euler(0, 270, 0));    
                     }
                 }
                 else
@@ -314,6 +346,41 @@ public class DungeonMaze : MonoBehaviour
                     GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                     sphere.transform.localScale = new Vector3(scale, scale, scale);
                     sphere.transform.position = pos;
+                }
+            }
+
+        for (int z = 0; z < depth; z++)
+            for (int x = 0; x < width; x++)
+            {
+                if (piecePlaces[x, z]._piece != PieceType.Room) continue;
+
+                Vector3 pos = new Vector3(x * scale, 0, z * scale); // Save pos
+                GameObject doorway;
+                LocateDoors(x, z);
+
+                Vector3 newDoorwayPos = pos + new Vector3(0, 0, 0.01f);
+                if (top)
+                {
+                    // doorway = Instantiate(doorwaypiece, newDoorwayPos, Quaternion.Euler(0, 180, 0));
+                    doorway = SpawnPiece(DoorTop, pos);
+                }
+
+                if (bottom)
+                {
+                    // doorway = Instantiate(doorwaypiece, newDoorwayPos, Quaternion.Euler(0, 0, 0));
+                    doorway = SpawnPiece(DoorBottom, pos);
+                }
+
+                if (left)
+                {
+                    // doorway = Instantiate(doorwaypiece, newDoorwayPos, Quaternion.Euler(0, 90, 0));
+                    doorway = SpawnPiece(DoorLeft, pos);
+                }
+
+                if (right)
+                {
+                    // doorway = Instantiate(doorwaypiece, newDoorwayPos, Quaternion.Euler(0, 270, 0));
+                    doorway = SpawnPiece(DoorRight, pos);
                 }
             }
     }
@@ -340,10 +407,14 @@ public class DungeonMaze : MonoBehaviour
         right = false;
 
         if (x <= 0 || x >= width - 1 || z <= 0 || z >= depth - 1) return;
-        if (map[x, z + 1] == 0 && map[x -1, z + 1] == 1 && map[x + 1, z + 1] == 1) top = true;
-        if (map[x, z - 1] == 0 && map[x -1, z - 1] == 1 && map[x +1, z - 1] == 1) bottom = true;
-        if (map[x + 1, z] == 0 && map[x +1, z + 1] == 1 && map[x +1, z - 1] == 1) right = true;
-        if (map[x - 1, z] == 0 && map[x -1, z + 1] == 1 && map[x -1, z - 1] == 1) left = true;
+        if (piecePlaces[x, z + 1]._piece != PieceType.Room && piecePlaces[x, z + 1]._piece != PieceType.Wall) top = true;
+        // if (map[x, z + 1] == 0 && map[x - 1, z + 1] == 1 && map[x + 1, z + 1] == 1) top = true;
+        if (piecePlaces[x, z - 1]._piece != PieceType.Room && piecePlaces[x, z - 1]._piece != PieceType.Wall) bottom = true;
+        // if (map[x, z - 1] == 0 && map[x - 1, z - 1] == 1 && map[x + 1, z - 1] == 1) bottom = true;
+        if (piecePlaces[x + 1, z]._piece != PieceType.Room && piecePlaces[x + 1, z]._piece != PieceType.Wall) right = true;
+        // if (map[x + 1, z] == 0 && map[x + 1, z + 1] == 1 && map[x + 1, z - 1] == 1) right = true;
+        if (piecePlaces[x - 1, z]._piece != PieceType.Room && piecePlaces[x - 1, z]._piece != PieceType.Wall) left = true;
+        // if (map[x - 1, z] == 0 && map[x - 1, z + 1] == 1 && map[x - 1, z - 1] == 1) left = true;
     }
 
 
@@ -354,14 +425,14 @@ public class DungeonMaze : MonoBehaviour
 
         for (int z = 1; z > -2; z--)
         {
-           for (int x = -1; x < 2; x++)
-           {
-              if (pattern[pos] == map[c + x, r + z] || pattern[pos] == 5)
-              {
-                 count++; 
-              } 
-              pos++;
-           } 
+            for (int x = -1; x < 2; x++)
+            {
+                if (pattern[pos] == map[c + x, r + z] || pattern[pos] == 5)
+                {
+                    count++;
+                }
+                pos++;
+            }
         }
         return count == 9;
     }
@@ -393,5 +464,16 @@ public class DungeonMaze : MonoBehaviour
     public int CountAllNeighbours(int x, int z)
     {
         return CountSquareNeighbours(x, z) + CountDiagonalNeighbours(x, z);
+    }
+
+    private void AssignPiece(MapLocation loc, PieceType type, GameObject model)
+    {
+        piecePlaces[loc.x, loc.z]._piece = type;
+        piecePlaces[loc.x, loc.z]._model = model;
+    }
+
+    private GameObject SpawnPiece(Module module, Vector3 position)
+    {
+        return Instantiate(module.prefab, position, Quaternion.Euler(module.rotation));
     }
 }

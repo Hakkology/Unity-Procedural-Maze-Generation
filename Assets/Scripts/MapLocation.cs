@@ -1,4 +1,4 @@
-public class MapLocation       
+public class MapLocation
 {
     public int x;
     public int z;
