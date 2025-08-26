@@ -15,7 +15,10 @@ public class CorridorMaze : MonoBehaviour
     public int width = 30; //x length
     public int depth = 30; //z length
     public byte[,] map;
+    public Pieces[,] piecePlaces;
     public int scale = 6;
+    public int level = 0;
+
 
     [Header("Straight piece References")]
     public Module VerticalStraight;
@@ -46,6 +49,11 @@ public class CorridorMaze : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Build();
+    }
+
+    public void Build()
+    {
         InitialiseMap();
         GenerateMap();
         DrawMap();
@@ -55,6 +63,7 @@ public class CorridorMaze : MonoBehaviour
     void InitialiseMap()
     {
         map = new byte[width, depth];
+        piecePlaces = new Pieces[width, depth];
         for (int z = 0; z < depth; z++)
             for (int x = 0; x < width; x++)
             {
@@ -74,45 +83,52 @@ public class CorridorMaze : MonoBehaviour
 
     void DrawMap()
     {
+        int height = level * scale * 2;
         for (int z = 0; z < depth; z++)
             for (int x = 0; x < width; x++)
             {
-                Vector3 pos = new Vector3(x * scale, 0, z * scale);
+                Vector3 pos = new Vector3(x * scale, height, z * scale);
                 if (map[x, z] == 1)
                 {
                     //Vector3 pos = new Vector3(x * scale, 0, z * scale);
                     //GameObject wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
                     //wall.transform.localScale = new Vector3(scale, scale, scale);
                     // wall.transform.position = pos;
+                    AssignPiece(new MapLocation(x, z), PieceType.Wall, null);
                 }
                 else if (Search2D(x, z, new int[] { 5, 1, 5, 0, 0, 1, 5, 1, 5 })) //horizontal end piece -|
                 {
                     // GameObject block = Instantiate(endpiece);
                     GameObject block = SpawnPiece(EndpieceLeft, pos);
+                    AssignPiece(new MapLocation(x, z), PieceType.DeadToright, block);
                     // block.transform.position = pos;
                 }
                 else if (Search2D(x, z, new int[] { 5, 1, 5, 1, 0, 0, 5, 1, 5 })) //horizontal end piece |-
                 {
                     // GameObject block = Instantiate(endpiece);
                     GameObject block = SpawnPiece(EndpieceRight, pos);
+                    AssignPiece(new MapLocation(x, z), PieceType.DeadToLeft, block);
                     // block.transform.position = new Vector3(x * scale, 0, z * scale);
                     // block.transform.Rotate(0, 180, 0);
                 }
                 else if (Search2D(x, z, new int[] { 5, 1, 5, 1, 0, 1, 5, 0, 5 })) //vertical end piece T
                 {
                     GameObject block = SpawnPiece(Endpiece, pos);
+                    AssignPiece(new MapLocation(x, z), PieceType.DeadEnd, block);
                     // block.transform.position = new Vector3(x * scale, 0, z * scale);
                     // block.transform.Rotate(0, -90, 0);
                 }
                 else if (Search2D(x, z, new int[] { 5, 0, 5, 1, 0, 1, 5, 1, 5 })) //vertical end piece upside downT
                 {
                     GameObject block = SpawnPiece(EndpieceUpsideDown, pos);
+                    AssignPiece(new MapLocation(x, z), PieceType.DeadUpsideDown, block);
                     // block.transform.position = new Vector3(x * scale, 0, z * scale);
                     // block.transform.Rotate(0, 90, 0);
                 }
                 else if (Search2D(x, z, new int[] { 5, 0, 5, 1, 0, 1, 5, 0, 5 })) //vertical straight
                 {
                     GameObject go = SpawnPiece(VerticalStraight, pos);
+                    AssignPiece(new MapLocation(x, z), PieceType.Vertical_Straight, go);
                     // Vector3 pos = new Vector3(x * scale, 0, z * scale);
                     // Instantiate(straight, pos, Quaternion.identity);
                 }
@@ -120,61 +136,69 @@ public class CorridorMaze : MonoBehaviour
                 {
                     // Vector3 pos = new Vector3(x * scale, 0, z * scale);
                     GameObject go = SpawnPiece(HorizontalStraight, pos);
+                    AssignPiece(new MapLocation(x, z), PieceType.Horizontal_Straight, go);
                     // go.transform.Rotate(0, 90, 0);
                 }
                 else if (Search2D(x, z, new int[] { 1, 0, 1, 0, 0, 0, 1, 0, 1 })) //crossroad
                 {
                     GameObject go = SpawnPiece(Crossroad, pos);
+                    AssignPiece(new MapLocation(x, z), PieceType.Crossroad, go);
                     // go.transform.position = new Vector3(x * scale, 0, z * scale);
                 }
                 else if (Search2D(x, z, new int[] { 5, 1, 5, 0, 0, 1, 1, 0, 5 })) //upper left corner
                 {
                     GameObject go = SpawnPiece(LeftUpCorner, pos);
+                    AssignPiece(new MapLocation(x, z), PieceType.Left_Up_Corner, go);
                     // go.transform.position = new Vector3(x * scale, 0, z * scale);
                     // go.transform.Rotate(0, 180, 0);
                 }
                 else if (Search2D(x, z, new int[] { 5, 1, 5, 1, 0, 0, 5, 0, 1 })) //upper right corner
                 {
                     GameObject go = SpawnPiece(RightUpCorner, pos);
+                    AssignPiece(new MapLocation(x, z), PieceType.Right_Up_Corner, go);
                     // go.transform.position = new Vector3(x * scale, 0, z * scale);
                     // go.transform.Rotate(0, 90, 0);
                 }
                 else if (Search2D(x, z, new int[] { 5, 0, 1, 1, 0, 0, 5, 1, 5 })) //lower right corner
                 {
                     GameObject go = SpawnPiece(RightDownCorner, pos);
+                    AssignPiece(new MapLocation(x, z), PieceType.Right_Down_Corner, go);
                     // go.transform.position = new Vector3(x * scale, 0, z * scale);
                 }
                 else if (Search2D(x, z, new int[] { 1, 0, 5, 5, 0, 1, 5, 1, 5 })) //lower left corner
                 {
                     GameObject go = SpawnPiece(LeftDownCorner, pos);
+                    AssignPiece(new MapLocation(x, z), PieceType.Left_Down_Corner, go);
                     // go.transform.position = new Vector3(x * scale, 0, z * scale);
                     // go.transform.Rotate(0, -90, 0);
                 }
                 else if (Search2D(x, z, new int[] { 1, 0, 1, 0, 0, 0, 5, 1, 5 })) //tjunc  upsidedown T
                 {
                     GameObject go = SpawnPiece(TIntersectionUpsideDown, pos);
+                    AssignPiece(new MapLocation(x, z), PieceType.TUpsideDown, go);
                     // go.transform.position = new Vector3(x * scale, 0, z * scale);
                     // go.transform.Rotate(0, -90, 0);
                 }
                 else if (Search2D(x, z, new int[] { 5, 1, 5, 0, 0, 0, 1, 0, 1 })) //tjunc  T
                 {
                     GameObject go = SpawnPiece(TIntersection, pos);
+                    AssignPiece(new MapLocation(x, z), PieceType.T_Junction, go);
                     // go.transform.position = new Vector3(x * scale, 0, z * scale);
                     // go.transform.Rotate(0, 90, 0);
                 }
                 else if (Search2D(x, z, new int[] { 1, 0, 5, 0, 0, 1, 1, 0, 5 })) //tjunc  -|
                 {
                     GameObject go = SpawnPiece(TIntersectionLeft, pos);
+                    AssignPiece(new MapLocation(x, z), PieceType.TToLeft, go);
                     // go.transform.position = new Vector3(x * scale, 0, z * scale);
                     // go.transform.Rotate(0, 180, 0);
                 }
                 else if (Search2D(x, z, new int[] { 5, 0, 1, 1, 0, 0, 5, 0, 1 })) //tjunc  |-
                 {
                     GameObject go = SpawnPiece(TIntersectionRight, pos);
+                    AssignPiece(new MapLocation(x, z), PieceType.TToRight, go);
                     // go.transform.position = new Vector3(x * scale, 0, z * scale);
                 }
-
-
             }
     }
 
@@ -233,9 +257,15 @@ public class CorridorMaze : MonoBehaviour
     {
         return CountSquareNeighbours(x, z) + CountDiagonalNeighbours(x, z);
     }
-    
+
     private GameObject SpawnPiece(Module module, Vector3 position)
     {
         return Instantiate(module.prefab, position, Quaternion.Euler(module.rotation));
+    }
+    
+    private void AssignPiece(MapLocation loc, PieceType type, GameObject model)
+    {
+        piecePlaces[loc.x, loc.z]._piece = type;
+        piecePlaces[loc.x, loc.z]._model = model;
     }
 }
