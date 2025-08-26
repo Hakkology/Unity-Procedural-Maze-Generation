@@ -47,7 +47,9 @@ public class MazeManager : MonoBehaviour
                             var ladderModel = Instantiate(StraightManHoleUp, downPosition, Quaternion.identity);
 
                             mazes[mazelvl].piecePlaces[x, z]._model = upModel;
+                            mazes[mazelvl].piecePlaces[x, z]._piece = PieceType.Ladder;
                             mazes[mazelvl+1].piecePlaces[x, z]._model = ladderModel;
+                            mazes[mazelvl+1].piecePlaces[x, z]._piece = PieceType.Ladder;
                         }
                         else if (mazes[mazelvl].piecePlaces[x, z]._piece == PieceType.DeadEnd)
                         {
@@ -61,7 +63,9 @@ public class MazeManager : MonoBehaviour
                             var ladderModel = Instantiate(DeadendManHoleUp, downPosition, Quaternion.identity);
 
                             mazes[mazelvl].piecePlaces[x, z]._model = upModel;
+                            mazes[mazelvl].piecePlaces[x, z]._piece = PieceType.Ladder;
                             mazes[mazelvl+1].piecePlaces[x, z]._model = ladderModel;
+                            mazes[mazelvl+1].piecePlaces[x, z]._piece = PieceType.Ladder;
                         }
                     }
                 }

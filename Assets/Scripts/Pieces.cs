@@ -30,5 +30,6 @@ public enum PieceType
     DeadToLeft,
     Wall,
     Crossroad,
-    Room
+    Room,
+    Ladder
 }
