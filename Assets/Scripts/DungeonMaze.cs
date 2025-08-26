@@ -159,7 +159,6 @@ public class DungeonMaze : MonoBehaviour
                 }
                 else if (Search2D(x, z, new int[] { 5, 1, 5, 0, 0, 0, 5, 1, 5 })) // horizontal straight
                 {
-                    // Procedural mace piece add code.
                     // GameObject piece = Instantiate(straight, pos, Quaternion.identity);
                     GameObject piece = SpawnPiece(HorizontalStraight, pos);
                     AssignPiece(new MapLocation(x, z), PieceType.Horizontal_Straight, piece);

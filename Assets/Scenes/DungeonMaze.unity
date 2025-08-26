@@ -167,17 +167,84 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 1281112718}
-  straight: {fileID: 6715551033286075417, guid: 91eddfca1f4e245e1929ae4ff4c2e878, type: 3}
-  crossroad: {fileID: 4339788278108003769, guid: 232794c0635234d558005b62cdc4bf0b, type: 3}
-  deadend: {fileID: 3120841968643601405, guid: 8fa9dfdcf3aee4d0f820d4eefb2e3815, type: 3}
-  cornerstraight: {fileID: 4304896706819798347, guid: 1f587c8f6c06244ef8dc63c9c5012bd0, type: 3}
-  cornercurved: {fileID: 0}
-  tjunction: {fileID: 7047614593825990763, guid: 8c4a794b74b254a1d978ac6a3475deff, type: 3}
-  floorpiece: {fileID: 2966578154763797965, guid: 6f79f7af2f2424bb6ae24b086b365eae, type: 3}
-  wallpiece: {fileID: 2721988035655537674, guid: 7d047f4bd7b074db5b3aff0456ad638b, type: 3}
-  ceilingpiece: {fileID: 2247822897451286793, guid: 34508fc055dd6487abf76e2a3e126481, type: 3}
-  pillarpiece: {fileID: 856684284719474739, guid: 76bba92b96c2ce941a2671ca1ef3a841, type: 3}
-  doorwaypiece: {fileID: 5394584503347338195, guid: a54ce3626b2650a4a81d0b66a6cdd8ae, type: 3}
+  VerticalStraight:
+    prefab: {fileID: 6715551033286075417, guid: 91eddfca1f4e245e1929ae4ff4c2e878, type: 3}
+    rotation: {x: 0, y: 90, z: 0}
+  HorizontalStraight:
+    prefab: {fileID: 6715551033286075417, guid: 91eddfca1f4e245e1929ae4ff4c2e878, type: 3}
+    rotation: {x: 0, y: 0, z: 0}
+  Crossroad:
+    prefab: {fileID: 4339788278108003769, guid: 232794c0635234d558005b62cdc4bf0b, type: 3}
+    rotation: {x: 0, y: 0, z: 0}
+  Endpiece:
+    prefab: {fileID: 3120841968643601405, guid: 8fa9dfdcf3aee4d0f820d4eefb2e3815, type: 3}
+    rotation: {x: 0, y: 90, z: 0}
+  EndpieceUpsideDown:
+    prefab: {fileID: 3120841968643601405, guid: 8fa9dfdcf3aee4d0f820d4eefb2e3815, type: 3}
+    rotation: {x: 0, y: -90, z: 0}
+  EndpieceRight:
+    prefab: {fileID: 3120841968643601405, guid: 8fa9dfdcf3aee4d0f820d4eefb2e3815, type: 3}
+    rotation: {x: 0, y: 180, z: 0}
+  EndpieceLeft:
+    prefab: {fileID: 3120841968643601405, guid: 8fa9dfdcf3aee4d0f820d4eefb2e3815, type: 3}
+    rotation: {x: 0, y: 0, z: 0}
+  RightUpCorner:
+    prefab: {fileID: 4304896706819798347, guid: 1f587c8f6c06244ef8dc63c9c5012bd0, type: 3}
+    rotation: {x: 0, y: 90, z: 0}
+  RightDownCorner:
+    prefab: {fileID: 4304896706819798347, guid: 1f587c8f6c06244ef8dc63c9c5012bd0, type: 3}
+    rotation: {x: 0, y: 0, z: 0}
+  LeftUpCorner:
+    prefab: {fileID: 4304896706819798347, guid: 1f587c8f6c06244ef8dc63c9c5012bd0, type: 3}
+    rotation: {x: 0, y: 180, z: 0}
+  LeftDownCorner:
+    prefab: {fileID: 4304896706819798347, guid: 1f587c8f6c06244ef8dc63c9c5012bd0, type: 3}
+    rotation: {x: 0, y: -90, z: 0}
+  TIntersection:
+    prefab: {fileID: 7047614593825990763, guid: 8c4a794b74b254a1d978ac6a3475deff, type: 3}
+    rotation: {x: 0, y: 90, z: 0}
+  TIntersectionUpsideDown:
+    prefab: {fileID: 7047614593825990763, guid: 8c4a794b74b254a1d978ac6a3475deff, type: 3}
+    rotation: {x: 0, y: -90, z: 0}
+  TIntersectionLeft:
+    prefab: {fileID: 7047614593825990763, guid: 8c4a794b74b254a1d978ac6a3475deff, type: 3}
+    rotation: {x: 0, y: 0, z: 0}
+  TIntersectionRight:
+    prefab: {fileID: 7047614593825990763, guid: 8c4a794b74b254a1d978ac6a3475deff, type: 3}
+    rotation: {x: 0, y: 180, z: 0}
+  WallpieceTop:
+    prefab: {fileID: 2721988035655537674, guid: 7d047f4bd7b074db5b3aff0456ad638b, type: 3}
+    rotation: {x: 0, y: 0, z: 0}
+  WallpieceBottom:
+    prefab: {fileID: 2721988035655537674, guid: 7d047f4bd7b074db5b3aff0456ad638b, type: 3}
+    rotation: {x: 0, y: 180, z: 0}
+  WallpieceRight:
+    prefab: {fileID: 2721988035655537674, guid: 7d047f4bd7b074db5b3aff0456ad638b, type: 3}
+    rotation: {x: 0, y: 90, z: 0}
+  WallpieceLeft:
+    prefab: {fileID: 2721988035655537674, guid: 7d047f4bd7b074db5b3aff0456ad638b, type: 3}
+    rotation: {x: 0, y: -90, z: 0}
+  DoorTop:
+    prefab: {fileID: 5394584503347338195, guid: a54ce3626b2650a4a81d0b66a6cdd8ae, type: 3}
+    rotation: {x: 0, y: 180, z: 0}
+  DoorBottom:
+    prefab: {fileID: 5394584503347338195, guid: a54ce3626b2650a4a81d0b66a6cdd8ae, type: 3}
+    rotation: {x: 0, y: 0, z: 0}
+  DoorRight:
+    prefab: {fileID: 5394584503347338195, guid: a54ce3626b2650a4a81d0b66a6cdd8ae, type: 3}
+    rotation: {x: 0, y: 90, z: 0}
+  DoorLeft:
+    prefab: {fileID: 5394584503347338195, guid: a54ce3626b2650a4a81d0b66a6cdd8ae, type: 3}
+    rotation: {x: 0, y: -90, z: 0}
+  Floorpiece:
+    prefab: {fileID: 2966578154763797965, guid: 6f79f7af2f2424bb6ae24b086b365eae, type: 3}
+    rotation: {x: 0, y: 0, z: 0}
+  Ceilingpiece:
+    prefab: {fileID: 2247822897451286793, guid: 34508fc055dd6487abf76e2a3e126481, type: 3}
+    rotation: {x: 0, y: 0, z: 0}
+  Pillarpiece:
+    prefab: {fileID: 856684284719474739, guid: 76bba92b96c2ce941a2671ca1ef3a841, type: 3}
+    rotation: {x: 0, y: 0, z: 0}
   width: 30
   depth: 30
   scale: 6
