@@ -49,7 +49,7 @@ public class CorridorMaze : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Build();
+        // Build();
     }
 
     public void Build()
@@ -57,7 +57,8 @@ public class CorridorMaze : MonoBehaviour
         InitialiseMap();
         GenerateMap();
         DrawMap();
-        PlaceFPC();
+        if (Player != null)
+            PlaceFPC();
     }
 
     void InitialiseMap()
