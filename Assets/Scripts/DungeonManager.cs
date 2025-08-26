@@ -33,6 +33,8 @@ public class DungeonManager : MonoBehaviour
 
         for (int mazelvl = 0; mazelvl < mazes.Length - 1; mazelvl++)
         {
+            level1ends.Clear();
+            level2ends.Clear();
             for (int z = 0; z < depth; z++)
                 for (int x = 0; x < width; x++)
                 {
