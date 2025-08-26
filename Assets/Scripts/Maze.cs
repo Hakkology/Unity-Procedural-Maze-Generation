@@ -65,7 +65,7 @@ public class Maze : MonoBehaviour
         for (int z = 0; z < depth; z++)
             for (int x = 0; x < width; x++)
             {
-                if (map[x, z] != 1)
+                if (map[x, z] == 0)
                 {
                     Player.transform.position = new Vector3(x * scale, 3, z * scale);
                     return;
