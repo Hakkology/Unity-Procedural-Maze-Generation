@@ -1,11 +1,7 @@
-﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
-public class Maze : MonoBehaviour
-{
+public class PathfindingMaze : MonoBehaviour {
     public List<MapLocation> directions = new List<MapLocation>() {
                                         new MapLocation(1,0),
                                         new MapLocation(0,1),
@@ -14,6 +10,8 @@ public class Maze : MonoBehaviour
 
     [Header("Player Reference")]
     public GameObject Player;
+    public Material WallColour;
+
     public List<MapLocation> wallLocations;
     public List<MapLocation> corridorLocations;
     public int width = 30; //x length
@@ -28,7 +26,7 @@ public class Maze : MonoBehaviour
         InitialiseMap();
         GenerateMap();
         DrawMap();
-        PlaceFPC();
+        // PlaceFPC();
     }
 
     void InitialiseMap()
@@ -62,6 +60,7 @@ public class Maze : MonoBehaviour
                     GameObject wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
                     wall.transform.localScale = new Vector3(scale, scale, scale);
                     wall.transform.position = pos;
+                    if(WallColour) wall.GetComponent<Renderer>().sharedMaterial = WallColour;
                 }
             }
     }

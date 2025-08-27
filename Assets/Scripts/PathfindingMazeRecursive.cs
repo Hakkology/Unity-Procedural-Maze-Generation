@@ -1,10 +1,7 @@
-
-using System.Collections.Generic;
 using UnityEngine;
 
-public class MazeRecursive : Maze
-{    
-
+public class PathfindingMazeRecursive : PathfindingMaze 
+{
     public override void GenerateMap()
     {
         Generate(Random.Range(1, width), Random.Range(1, depth)); 
