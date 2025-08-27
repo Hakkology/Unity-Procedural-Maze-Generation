@@ -68,13 +68,15 @@ public class DungeonMaze : MonoBehaviour
     public float zOffset = 0;
     public bool IsPathfinding;
 
-
-    public List<MapLocation> wallLocations;
-    public List<MapLocation> corridorLocations;
+    public List<MapLocation> locations = new List<MapLocation>();
+    // public List<MapLocation> wallLocations;
+    // public List<MapLocation> corridorLocations;
     public List<MapLocation> pillarLocations = new();
 
     public byte[,] map;
     public Pieces[,] piecePlaces;
+    public MapLocation entryPoint;
+    public MapLocation exitPoint;
 
     private DungeonPathfinding dungeonPathfinding;
     bool top;
@@ -89,8 +91,8 @@ public class DungeonMaze : MonoBehaviour
 
     void Start()
     {
-        wallLocations = new List<MapLocation>();
-        corridorLocations = new List<MapLocation>();
+        // wallLocations = new List<MapLocation>();
+        // corridorLocations = new List<MapLocation>();
     }
 
     public void Build()
@@ -213,6 +215,26 @@ public class DungeonMaze : MonoBehaviour
 
         if (Player != null)
             PlaceFPC();
+
+        SetMapCoordinates();
+    }
+
+    private void SetMapCoordinates()
+    {
+        for (int z = 0; z < depth; z++)
+            for (int x = 0; x < width; x++)
+            {
+                GameObject go = piecePlaces[x, z]._model;
+                if (go != null)
+                {
+                    go.GetComponent<DungeonMapLocation>().x = x;
+                    go.GetComponent<DungeonMapLocation>().z = z;
+                }
+                if (map[x, z] != 1)
+                {
+                    locations.Add(new MapLocation(x, z));
+                }
+            }
     }
 
     public virtual void PlaceFPC()
@@ -615,6 +637,8 @@ public class DungeonMaze : MonoBehaviour
     {
         piecePlaces[loc.x, loc.z]._piece = type;
         piecePlaces[loc.x, loc.z]._model = model;
+        // piecePlaces[loc.x, loc.z]._model.GetComponent<DungeonMapLocation>().x = loc.x;
+        // piecePlaces[loc.x, loc.z]._model.GetComponent<DungeonMapLocation>().z = loc.z;
     }
 
     private GameObject SpawnPiece(Module module, Vector3 position)

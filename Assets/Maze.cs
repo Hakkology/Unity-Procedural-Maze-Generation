@@ -59,6 +59,9 @@
 //     public float xOffset = 0;
 //     public float zOffset = 0;
 
+//     public MapLocation entryPoint;
+//     public MapLocation exitPoint;
+
 //     [System.Serializable]
 //     public struct Module
 //     {
@@ -67,7 +70,9 @@
 //     }
 
 //     public Module VerticalStraight;
+//     public Module VerticalStraightLight;
 //     public Module HorizontalStraight;
+//     public Module HorizontalStraightLight;
 //     public Module Crossroad;
 //     public Module RightUpCorner;
 //     public Module RightDownCorner;
@@ -87,6 +92,7 @@
 //     public Module WallpieceLeft;
 //     public Module Floorpiece;
 //     public Module Ceilingpiece;
+
 
 //     public Module Pillar;
 //     public Module DoorTop;
@@ -135,6 +141,7 @@
 //     }
 
 //     public Pieces[,] piecePlaces;
+//     public List<MapLocation> locations = new List<MapLocation>();
 
 
 //     public void Build()
@@ -257,6 +264,26 @@
 
 //         if (FPC != null)
 //             PlaceFPC();
+
+//         PlaceObject[] placeObjects = GetComponents<PlaceObject>();
+//         if (placeObjects.Length > 0)
+//             foreach (PlaceObject po in placeObjects)
+//                 po.Go();
+
+
+//         for (int z = 1; z < depth - 1; z++)
+//             for (int x = 1; x < width - 1; x++)
+//             {
+//                 GameObject go = piecePlaces[x, z].model;
+//                 if (go != null)
+//                 {
+//                     go.GetComponent<MapLoc>().x = x;
+//                     go.GetComponent<MapLoc>().z = z;
+//                 }
+//                 if (map[x, z] != 1)
+//                     locations.Add(new MapLocation(x, z));
+//             }
+
 //     }
 
 //     public virtual void AddRooms(int count, int minSize, int maxSize)
@@ -301,6 +328,7 @@
 //     public void DrawMap()
 //     {
 //         int height = (int)(level * scale * levelDistance);
+//         bool placeLight = true;
 
 //         for (int z = 0; z < depth; z++)
 //             for (int x = 0; x < width; x++)
@@ -357,7 +385,15 @@
 //                 else if (Search2D(x, z, new int[] { 5, 0, 5, 1, 0, 1, 5, 0, 5 })) //vertical straight
 //                 {
 //                     Vector3 pos = new Vector3(x * scale, height, z * scale);
-//                     GameObject go = Instantiate(VerticalStraight.prefab, pos, Quaternion.identity);
+//                     GameObject go;
+
+//                     if(placeLight && VerticalStraightLight.prefab != null)
+//                         go = Instantiate(VerticalStraightLight.prefab, pos, Quaternion.identity);
+//                     else
+//                         go = Instantiate(VerticalStraight.prefab, pos, Quaternion.identity);
+
+//                     placeLight = !placeLight;
+
 //                     go.transform.Rotate(VerticalStraight.rotation);
 //                     go.transform.SetParent(this.gameObject.transform);
 //                     piecePlaces[x, z].piece = PieceType.Vertical_Straight;
@@ -366,7 +402,16 @@
 //                 else if (Search2D(x, z, new int[] { 5, 1, 5, 0, 0, 0, 5, 1, 5 })) //horizontal straight
 //                 {
 //                     Vector3 pos = new Vector3(x * scale, height, z * scale);
-//                     GameObject go = Instantiate(HorizontalStraight.prefab, pos, Quaternion.identity);
+//                     GameObject go;
+
+//                     if (placeLight && HorizontalStraightLight.prefab != null)
+//                         go = Instantiate(HorizontalStraightLight.prefab, pos, Quaternion.identity);
+//                     else
+//                         go = Instantiate(HorizontalStraight.prefab, pos, Quaternion.identity);
+
+//                     placeLight = !placeLight;
+
+                     
 //                     go.transform.Rotate(HorizontalStraight.rotation);
 //                     go.transform.SetParent(this.gameObject.transform);
 //                     piecePlaces[x, z].piece = PieceType.Horizontal_Straight;

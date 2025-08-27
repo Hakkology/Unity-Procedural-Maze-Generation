@@ -28,6 +28,19 @@ public class DungeonPathfinding : MonoBehaviour {
         MarkPath();
     }
 
+    public DungeonPathMarker Build(DungeonMaze m, MapLocation start, MapLocation end)
+    {
+        maze = m;
+
+        DungeonPathMarker startingPathMarker = new DungeonPathMarker(start, 0, 0, 0, null);
+        DungeonPathMarker endingPathMarker = new DungeonPathMarker(end, 0, 0, 0, null);
+        BeginSearch(startingPathMarker, endingPathMarker);
+
+        while (!done)
+            Search(lastPosition);
+        return lastPosition;
+    }
+
     void BeginSearch()
     {
         done = false;
@@ -47,6 +60,22 @@ public class DungeonPathfinding : MonoBehaviour {
 
         Vector3 goalLocation = new Vector3(locations[1].x * maze.scale, 0, locations[1].z * maze.scale);
         goalNode = new DungeonPathMarker(new MapLocation(locations[1].x, locations[1].z), 0, 0, 0, null);
+
+        open.Clear();
+        closed.Clear();
+
+        open.Add(startNode);
+        lastPosition = startNode;
+    }
+
+    void BeginSearch(DungeonPathMarker start, DungeonPathMarker end)
+    {
+        done = false;
+
+        maze.locations.Shuffle();
+
+        startNode = start;
+        goalNode = end;
 
         open.Clear();
         closed.Clear();

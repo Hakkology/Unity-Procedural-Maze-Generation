@@ -125,10 +125,15 @@ public class DungeonManager : MonoBehaviour
                                                     mazes[mazeIndex].scale * mazes[mazeIndex].level
                                                             * mazes[mazeIndex].levelDistance,
                                                     bottomOfStairs.z * mazes[mazeIndex].scale);
+
+        mazes[mazeIndex].exitPoint = new MapLocation(bottomOfStairs.x, bottomOfStairs.z);
+
         Vector3 stairPosTop = new Vector3(topOfStairs.x * mazes[mazeIndex + 1].scale,
                                                     mazes[mazeIndex + 1].scale * mazes[mazeIndex + 1].level
                                                             * mazes[mazeIndex + 1].levelDistance,
                                                     topOfStairs.z * mazes[mazeIndex + 1].scale);
+
+        mazes[mazeIndex + 1].entryPoint = new MapLocation(topOfStairs.x, topOfStairs.z);
 
         Destroy(mazes[mazeIndex].piecePlaces[bottomOfStairs.x, bottomOfStairs.z]._model);
         Destroy(mazes[mazeIndex + 1].piecePlaces[topOfStairs.x, topOfStairs.z]._model);
@@ -137,6 +142,8 @@ public class DungeonManager : MonoBehaviour
         stairs.transform.Rotate(0, rotAngle, 0);
         mazes[mazeIndex].piecePlaces[bottomOfStairs.x, bottomOfStairs.z]._model = stairs;
         mazes[mazeIndex].piecePlaces[bottomOfStairs.x, bottomOfStairs.z]._piece = PieceType.Ladder;
+        mazes[mazeIndex].piecePlaces[bottomOfStairs.x, bottomOfStairs.z]._model.GetComponent<DungeonMapLocation>().x = bottomOfStairs.x;
+        mazes[mazeIndex].piecePlaces[bottomOfStairs.x, bottomOfStairs.z]._model.GetComponent<DungeonMapLocation>().z = bottomOfStairs.z;
 
         mazes[mazeIndex + 1].piecePlaces[topOfStairs.x, topOfStairs.z]._model = null;
         mazes[mazeIndex + 1].piecePlaces[topOfStairs.x, topOfStairs.z]._piece = PieceType.Ladder;
