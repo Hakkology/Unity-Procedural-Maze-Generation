@@ -49,17 +49,13 @@ public class DungeonManager : MonoBehaviour
                     // }
 
                     if (mazes[mazelvl].piecePlaces[x, z]._piece == PieceType.DeadToLeft)
-                    {
                         level1ends.Add(new MapLocation(x, z));
-                    }
 
                     if (mazes[mazelvl + 1].piecePlaces[x, z]._piece == PieceType.DeadToright)
-                    {
                         level2ends.Add(new MapLocation(x, z));
-                    }
                 }
 
-            if (!level1ends.Any() && !level2ends.Any()) break;
+            if (level1ends.Count == 0 || level2ends.Count == 0) break;
 
             MapLocation bottomOfStairs = level1ends[Random.Range(0, level1ends.Count)];
             MapLocation topOfStairs = level2ends[Random.Range(0, level2ends.Count)];
@@ -70,9 +66,9 @@ public class DungeonManager : MonoBehaviour
             Vector3 stairBottomPosition = new Vector3(mazes[mazelvl].scale * bottomOfStairs.x,
                                                         mazes[mazelvl].scale * mazes[mazelvl].level * mazes[mazelvl].levelDistance,
                                                         mazes[mazelvl].scale * bottomOfStairs.z);
-            Vector3 stairTopPosition = new Vector3(mazes[mazelvl].scale * topOfStairs.x,
-                                                    mazes[mazelvl].scale * mazes[mazelvl].level * mazes[mazelvl].levelDistance,
-                                                    mazes[mazelvl].scale * topOfStairs.z);
+            // Vector3 stairTopPosition = new Vector3(mazes[mazelvl].scale * topOfStairs.x,
+            //                                         mazes[mazelvl].scale * mazes[mazelvl].level * mazes[mazelvl].levelDistance,
+            //                                         mazes[mazelvl].scale * topOfStairs.z);
 
             Destroy(mazes[mazelvl].piecePlaces[bottomOfStairs.x, bottomOfStairs.z]._model);
             Destroy(mazes[mazelvl + 1].piecePlaces[topOfStairs.x, topOfStairs.z]._model);
@@ -80,6 +76,7 @@ public class DungeonManager : MonoBehaviour
             GameObject Stairs = Instantiate(Stairwell, stairBottomPosition, Quaternion.identity, mazes[mazelvl].transform);
             mazes[mazelvl].piecePlaces[bottomOfStairs.x, bottomOfStairs.z]._model = Stairs;
             mazes[mazelvl].piecePlaces[bottomOfStairs.x, bottomOfStairs.z]._piece = PieceType.Ladder;
+            
             mazes[mazelvl + 1].piecePlaces[topOfStairs.x, topOfStairs.z]._model = null;
             mazes[mazelvl + 1].piecePlaces[topOfStairs.x, topOfStairs.z]._piece = PieceType.Ladder;
 
