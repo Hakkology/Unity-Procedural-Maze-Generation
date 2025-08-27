@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class DungeonMaze : MonoBehaviour
@@ -85,7 +86,7 @@ public class DungeonMaze : MonoBehaviour
     {
         dungeonPathfinding = GetComponent<DungeonPathfinding>();
     }
-    
+
     void Start()
     {
         wallLocations = new List<MapLocation>();
@@ -208,6 +209,7 @@ public class DungeonMaze : MonoBehaviour
         }
 
         DrawMap();
+        GenerateObjects();
 
         if (Player != null)
             PlaceFPC();
@@ -269,6 +271,14 @@ public class DungeonMaze : MonoBehaviour
                 }
             }
         }
+    }
+
+    public virtual void GenerateObjects()
+    {
+        DungeonPlaceObject[] objectspawners = GetComponents<DungeonPlaceObject>();
+        if (objectspawners.Length > 0)
+            foreach (var spawner in objectspawners)
+                spawner.SpawnObject();
     }
 
     public void DrawMap()
