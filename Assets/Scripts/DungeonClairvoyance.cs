@@ -31,7 +31,6 @@ public class DungeonClairvoyance : MonoBehaviour
 
                 magic = Instantiate(particles, transform.position, transform.rotation);
                 StartCoroutine(DisplayMagic());
-
             }
         }
     }
