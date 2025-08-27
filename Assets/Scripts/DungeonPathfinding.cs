@@ -8,8 +8,8 @@ public class DungeonPathfinding : MonoBehaviour {
     List<DungeonPathMarker> open = new();
     List<DungeonPathMarker> closed = new();
 
-    DungeonPathMarker goalNode;
-    DungeonPathMarker startNode;
+    public DungeonPathMarker goalNode;
+    public DungeonPathMarker startNode;
     DungeonPathMarker lastPosition;
 
     bool done = false;

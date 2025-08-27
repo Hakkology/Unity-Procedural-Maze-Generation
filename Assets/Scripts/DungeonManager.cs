@@ -15,8 +15,8 @@ public class DungeonManager : MonoBehaviour
     [Header("Ladder piece References")]
     public GameObject Stairwell;
 
-    private List<MapLocation> level1ends = new();
-    private List<MapLocation> level2ends = new();
+    // private List<MapLocation> level1ends = new();
+    // private List<MapLocation> level2ends = new();
 
 
     void Start()
@@ -30,6 +30,9 @@ public class DungeonManager : MonoBehaviour
             maze.levelDistance = 1.5f;
             maze.Build();
         }
+
+        width += 6;
+        depth += 6;
 
         for (int mazelvl = 0; mazelvl < mazes.Length - 1; mazelvl++)
         {
@@ -80,9 +83,9 @@ public class DungeonManager : MonoBehaviour
             // mazes[mazelvl + 1].piecePlaces[topOfStairs.x, topOfStairs.z]._model = null;
             // mazes[mazelvl + 1].piecePlaces[topOfStairs.x, topOfStairs.z]._piece = PieceType.Ladder;
 
-            if(PlaceStairs(mazelvl, 0, PieceType.DeadToLeft, PieceType.DeadToright, Stairwell)) continue;
-            if(PlaceStairs(mazelvl, 90, PieceType.DeadEnd, PieceType.DeadUpsideDown, Stairwell)) continue;
-            if(PlaceStairs(mazelvl, 180, PieceType.DeadToright, PieceType.DeadToLeft, Stairwell)) continue;
+            if (PlaceStairs(mazelvl, 0, PieceType.DeadToLeft, PieceType.DeadToright, Stairwell)) continue;
+            if (PlaceStairs(mazelvl, 90, PieceType.DeadEnd, PieceType.DeadUpsideDown, Stairwell)) continue;
+            if (PlaceStairs(mazelvl, 180, PieceType.DeadToright, PieceType.DeadToLeft, Stairwell)) continue;
             PlaceStairs(mazelvl, -90, PieceType.DeadUpsideDown, PieceType.DeadEnd, Stairwell);
         }
 

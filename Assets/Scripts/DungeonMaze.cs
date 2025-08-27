@@ -81,9 +81,13 @@ public class DungeonMaze : MonoBehaviour
     bool right;
     bool left;
 
-    void Start()
+    void Awake() 
     {
         dungeonPathfinding = GetComponent<DungeonPathfinding>();
+    }
+    
+    void Start()
+    {
         wallLocations = new List<MapLocation>();
         corridorLocations = new List<MapLocation>();
     }
@@ -92,10 +96,116 @@ public class DungeonMaze : MonoBehaviour
     {
         InitialiseMap();
         GenerateMap();
-        GenerateRooms(4, 3, 7);
+        GenerateRooms(5, 4, 10);
+
+        byte[,] oldmap = map;
+        int oldWidth = width;
+        int oldDepth = depth;
+
+        width += 6;
+        depth += 6;
+
+        map = new byte[width, depth];
+        InitialiseMap();
+
+        for (int z = 0; z < oldDepth; z++)
+            for (int x = 0; x < oldWidth; x++)
+            {
+                map[x + 3, z + 3] = oldmap[x, z];
+            }
+
+        int xpos;
+        int zpos;
+
 
         if (dungeonPathfinding != null && IsPathfinding)
+        {
             dungeonPathfinding.Build();
+            if (dungeonPathfinding.startNode.Location.x < dungeonPathfinding.goalNode.Location.x) //start is left
+            {
+                xpos = dungeonPathfinding.startNode.Location.x;
+                zpos = dungeonPathfinding.startNode.Location.z;
+
+                while (xpos > 1)
+                {
+                    map[xpos, zpos] = 0;
+                    xpos--;
+                }
+
+                xpos = dungeonPathfinding.goalNode.Location.x;
+                zpos = dungeonPathfinding.goalNode.Location.z;
+
+                while (xpos < width - 2)
+                {
+                    map[xpos, zpos] = 0;
+                    xpos++;
+                }
+            }
+            else
+            {
+                xpos = dungeonPathfinding.startNode.Location.x;
+                zpos = dungeonPathfinding.startNode.Location.z;
+
+                while (xpos < width - 2)
+                {
+                    map[xpos, zpos] = 0;
+                    xpos++;
+                }
+
+                xpos = dungeonPathfinding.goalNode.Location.x;
+                zpos = dungeonPathfinding.goalNode.Location.z;
+
+                while (xpos > 1)
+                {
+                    map[xpos, zpos] = 0;
+                    xpos--;
+                }
+
+            }
+
+        }
+        else
+        {
+            //upper vertical corridor
+            xpos = Random.Range(5, width - 5);
+            zpos = depth - 2;
+
+            while (map[xpos, zpos] != 0 && zpos > 1)
+            {
+                map[xpos, zpos] = 0;
+                zpos--;
+            }
+
+            //lower vertical corridor
+            xpos = Random.Range(5, width - 5);
+            zpos = 1;
+
+            while (map[xpos, zpos] != 0 && zpos < depth - 2)
+            {
+                map[xpos, zpos] = 0;
+                zpos++;
+            }
+
+            //right horizontal corridor
+            zpos = Random.Range(5, depth - 5);
+            xpos = width - 2;
+
+            while (map[xpos, zpos] != 0 && xpos > 1)
+            {
+                map[xpos, zpos] = 0;
+                xpos--;
+            }
+
+            //left horizontal corridor
+            zpos = Random.Range(5, depth - 5);
+            xpos = 1;
+
+            while (map[xpos, zpos] != 0 && xpos < width - 2)
+            {
+                map[xpos, zpos] = 0;
+                xpos++;
+            }
+        }
 
         DrawMap();
 
