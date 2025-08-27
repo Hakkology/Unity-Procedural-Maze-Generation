@@ -3,6 +3,14 @@ using UnityEngine;
 
 public class DungeonMaze : MonoBehaviour
 {
+    public List<MapLocation> directions = new List<MapLocation>()
+    {
+        new MapLocation(1, 0),
+        new MapLocation(-1, 0),
+        new MapLocation(0, 1),
+        new MapLocation(0, -1),
+    };
+
     [Header("Player Reference")]
     public GameObject Player;
 
@@ -57,6 +65,7 @@ public class DungeonMaze : MonoBehaviour
     public float levelDistance = 2.0f;
     public float xOffset = 0;
     public float zOffset = 0;
+    public bool IsPathfinding;
 
 
     public List<MapLocation> wallLocations;
@@ -66,6 +75,7 @@ public class DungeonMaze : MonoBehaviour
     public byte[,] map;
     public Pieces[,] piecePlaces;
 
+    private DungeonPathfinding dungeonPathfinding;
     bool top;
     bool bottom;
     bool right;
@@ -73,6 +83,7 @@ public class DungeonMaze : MonoBehaviour
 
     void Start()
     {
+        dungeonPathfinding = GetComponent<DungeonPathfinding>();
         wallLocations = new List<MapLocation>();
         corridorLocations = new List<MapLocation>();
     }
@@ -82,7 +93,12 @@ public class DungeonMaze : MonoBehaviour
         InitialiseMap();
         GenerateMap();
         GenerateRooms(4, 3, 7);
+
+        if (dungeonPathfinding != null && IsPathfinding)
+            dungeonPathfinding.Build();
+
         DrawMap();
+
         if (Player != null)
             PlaceFPC();
     }
@@ -100,7 +116,7 @@ public class DungeonMaze : MonoBehaviour
             }
     }
 
-    void InitialiseMap()
+    public void InitialiseMap()
     {
         map = new byte[width, depth];
         piecePlaces = new Pieces[width, depth];
@@ -145,7 +161,7 @@ public class DungeonMaze : MonoBehaviour
         }
     }
 
-    void DrawMap()
+    public void DrawMap()
     {
         int height = (int)(level * scale * levelDistance);
         for (int z = 0; z < depth; z++)

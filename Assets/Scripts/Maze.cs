@@ -29,12 +29,12 @@ public class Maze : MonoBehaviour
     {
         InitialiseMap();
         GenerateMap();
-        DrawMap();
+        //DrawMap();
         if (Player != null)
             PlaceFPC();
     }
 
-    void InitialiseMap()
+    public void InitialiseMap()
     {
         map = new byte[width,depth];
         for (int z = 0; z < depth; z++)
@@ -54,7 +54,7 @@ public class Maze : MonoBehaviour
             }
     }
 
-    void DrawMap()
+    public void DrawMap()
     {
         for (int z = 0; z < depth; z++)
             for (int x = 0; x < width; x++)

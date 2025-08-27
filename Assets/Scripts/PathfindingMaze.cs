@@ -3,9 +3,10 @@ using UnityEngine;
 
 public class PathfindingMaze : Maze
 {
+
     public override void GenerateMap()
     {
-        Generate(Random.Range(1, width), Random.Range(1, depth)); 
+        Generate(Random.Range(1, width), Random.Range(1, depth));
     }
 
     public void Generate(int x, int z)

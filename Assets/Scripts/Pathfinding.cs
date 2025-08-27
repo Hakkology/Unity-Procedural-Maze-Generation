@@ -25,14 +25,20 @@ public class Pathfinding : MonoBehaviour
 
     void Start()
     {
+        BeginSearch();
+        while (!done)
+            Search(lastPosition);
 
+        maze.InitialiseMap();
+        MarkPath();
+        maze.DrawMap();
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P)) BeginSearch();
-        if (Input.GetKeyDown(KeyCode.C) && !done) Search(lastPosition);
-        if (Input.GetKeyDown(KeyCode.M)) GetPath();
+        // if (Input.GetKeyDown(KeyCode.P)) BeginSearch();
+        // if (Input.GetKeyDown(KeyCode.C) && !done) Search(lastPosition);
+        // if (Input.GetKeyDown(KeyCode.M)) GetPath();
     }
 
     void BeginSearch()
@@ -94,22 +100,38 @@ public class Pathfinding : MonoBehaviour
         lastPosition = pm;
     }
 
-    private void GetPath()
+    // private void GetPath()
+    // {
+    //     RemoveAllMarkers();
+    //     PathMarker begin = lastPosition;
+
+    //     while (!startNode.Equals(begin) && begin != null)
+    //     {
+    //         Instantiate(pathMarkingObject,
+    //                     new Vector3(begin.Location.x * maze.scale, 0, begin.Location.z * maze.scale),
+    //                     Quaternion.identity);
+    //         begin = begin.Parent;
+    //     }
+
+    //     Instantiate(pathMarkingObject,
+    //                     new Vector3(startNode.Location.x * maze.scale, 0, startNode.Location.z * maze.scale),
+    //                     Quaternion.identity);
+    // }
+
+    private void MarkPath()
     {
         RemoveAllMarkers();
         PathMarker begin = lastPosition;
 
         while (!startNode.Equals(begin) && begin != null)
         {
-            Instantiate(pathMarkingObject,
-                        new Vector3(begin.Location.x * maze.scale, 0, begin.Location.z * maze.scale),
-                        Quaternion.identity);
+            maze.map[begin.Location.x, begin.Location.z] = 0;
             begin = begin.Parent;
         }
 
-        Instantiate(pathMarkingObject,
-                        new Vector3(startNode.Location.x * maze.scale, 0, startNode.Location.z * maze.scale),
-                        Quaternion.identity);
+        // Instantiate(pathMarkingObject,
+        //                 new Vector3(startNode.Location.x * maze.scale, 0, startNode.Location.z * maze.scale),
+        //                 Quaternion.identity);
     }
 
 
