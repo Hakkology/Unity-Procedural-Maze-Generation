@@ -14,12 +14,14 @@ public class Maze : MonoBehaviour
 
     [Header("Player Reference")]
     public GameObject Player;
+    public Material WallColour;
     public List<MapLocation> wallLocations;
     public List<MapLocation> corridorLocations;
     public int width = 30; //x length
     public int depth = 30; //z length
     public byte[,] map;
     public int scale = 6;
+    
 
 
     // Start is called before the first frame update
@@ -28,7 +30,8 @@ public class Maze : MonoBehaviour
         InitialiseMap();
         GenerateMap();
         DrawMap();
-        PlaceFPC();
+        if (Player != null)
+            PlaceFPC();
     }
 
     void InitialiseMap()
@@ -62,6 +65,7 @@ public class Maze : MonoBehaviour
                     GameObject wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
                     wall.transform.localScale = new Vector3(scale, scale, scale);
                     wall.transform.position = pos;
+                    if(WallColour) wall.GetComponent<Renderer>().sharedMaterial = WallColour;
                 }
             }
     }

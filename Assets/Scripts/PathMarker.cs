@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PathMarker : MonoBehaviour
+public class PathMarker 
 {
     public MapLocation Location;
     public float G;
